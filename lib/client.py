@@ -10,39 +10,55 @@ from lib.window import Window
 
 class Client(object):
 
-    def __init__(self, _ip, _port):
+    def __init__(self, _ip_addr, _port):
 
-        self.ip = _ip
+        self.ip_addr = _ip_addr
         self.port = _port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((self.ip, int(self.port)))
+        self.sock.connect((self.ip_addr, int(self.port)))
         self.window = Window()
         atexit.register(self.window.close())
         self.window.std.refresh()
+        self.msg = Msg("cliente", False)
         self.thread_listen = threading.Thread(target=self.listen_server)
         self.thread_send = threading.Thread(target=self.send_server)
         self.thread_listen.start()
         self.thread_send.start()
 
 
-
     def listen_server(self):
 
         while True:
-            ans = Msg().receive(self.sock)
+            ans = self.msg.receive(self.sock)
             if ans:
-                if ans["from"] == "@server":
+
+                if "group" in ans:
+                    if ans["group"] == "":
+                        self.window.clear_header()
+                        self.window.addstr_header("Connected on host: "+ \
+                        self.ip_addr +":"+ self.port + \
+                        " U're not in a group")
+                    else:
+                        self.window.clear_header()
+                        self.window.addstr_header("Connected on host: "+ \
+                        self.ip_addr +":"+ self.port + \
+                        " Group: " + ans["group"])
+
+                if "type" in ans:
+                    if ans["type"] == "clear":
+                        self.window.clear_data()
                     if ans["type"] == "quit":
                         break
-                    else:
-                        self.window.data.addstr("*** " + ans["text"]+"\n",)#text.encode('utf_8')
+
+                if ans["from"] == "@server":
+                    self.window.addstr_data("*** " + ans["text"]+"\n",
+                                            "server")
                 elif ans["type"] == "private":
-                    self.window.data.addstr("(" + ans["from"] + \
-                    ") > " + ans["to"] + " " + ans["text"]+"\n")
+                    self.window.addstr_data("(" + ans["from"] + \
+                    ") > " + ans["to"] + " " + ans["text"]+"\n", "private")
                 else:
-                    self.window.data.addstr(ans["from"] + " > " + \
-                    ans["text"]+"\n")
-                self.window.data.refresh()
+                    self.window.addstr_data(ans["from"] + " > " + \
+                    ans["text"]+"\n","text")
         #
         self.thread_send.stop()
         self.thread_listen.stop()
@@ -61,7 +77,7 @@ class Client(object):
                         "from" : "nick",
                         "to" : "@server",
                     }
-                    Msg().send(self.sock, msg) # cliente.envia_msg(envio)
+                    self.msg.send(self.sock, msg) # cliente.envia_msg(envio)
         except KeyboardInterrupt:
             self.sock.close()
 

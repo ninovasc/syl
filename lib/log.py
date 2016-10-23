@@ -20,5 +20,10 @@ class Log(object):
         reg_time = strftime("%Y%m%d%H%M%S", gmtime())
         log_file = open(self.type+self.time, 'a')
         _reg["time"] = reg_time
-        log_file.write(json.dumps(_reg)+"\n")
+        log_file.write(json.dumps(
+            _reg,
+            sort_keys=True,
+            indent=4,
+            separators=(',', ': ')
+        )+"\n")
         log_file.close()

@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 import struct
 import json
+from lib.log import Log
 from time import gmtime, strftime
 
 class Msg(object):
     """Classe para transito de mensagens, responsável
     pela struturação dos pacotes e chamada do log"""
-    def __init__(self):
+    def __init__(self,_type, _log):
+        if _log:
+            self.log = Log(_type + strftime("%Y%m%d%H%M%S", gmtime()) + ".log")
+        else:
+            self.log = None
         self.data = {}
 
     def create(self, _type, _from, _to, _group, _text, _file):
@@ -23,6 +28,8 @@ class Msg(object):
 
 
     def send(self,_client, _msg):
+        if self.log != None:
+            self.log.reg(_msg)
         msg_json = json.dumps(
             _msg,
             sort_keys=True,

@@ -7,6 +7,7 @@ class User(object):
         self.addr = _addr
         self.nick = _nick
         self.group = _group
+        self.away = False
 
     def json(self):
         json.dumps(self.__dict__)
