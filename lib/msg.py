@@ -9,7 +9,7 @@ class Msg(object):
     pela struturação dos pacotes e chamada do log"""
     def __init__(self,_type, _log):
         if _log:
-            self.log = Log(_type + strftime("%Y%m%d%H%M%S", gmtime()) + ".log")
+            self.log = Log(_type)
         else:
             self.log = None
         self.data = {}
@@ -37,13 +37,13 @@ class Msg(object):
             separators=(',', ': ')
         )
 
-    	# Inicia cada mensagem com o tamanho (em 4 bytes de comprimento)
+        # Inicia cada mensagem com o tamanho (em 4 bytes de comprimento)
         pack = struct.pack('>I', len(msg_json)) + msg_json
         _client.sendall(pack)
 
     def receive(self,_client):
 
-    	# Le o tamanho da mensagem e faz o 'unpack' em um inteiro
+        # Le o tamanho da mensagem e faz o 'unpack' em um inteiro
         len_msg_size = self.receive_all(_client, 4)
         if not len_msg_size:
             return None

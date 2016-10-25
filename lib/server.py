@@ -2,6 +2,7 @@
 """Módulo de contrelo do servidor"""
 import socket
 import threading
+import random
 from lib.msg import Msg
 from lib.user import User
 #from lib.log import Log
@@ -22,9 +23,11 @@ class Server(object):
             '/join':"com_join",
             '/leave':"com_leave",
             '/clear':"com_clear",
-            '/kick' : "com_kick",
-            '/delete' : "com_delete",
-            '/away' : "com_away"
+            '/kick': "com_kick",
+            '/delete': "com_delete",
+            '/away': "com_away",
+            '/list': "com_list",
+            '/clear': "com_clear"
 
         }
         self.users_list = []
@@ -85,12 +88,45 @@ class Server(object):
 
     def send_to_all(self, _user, _msg):
         """ok"""
-        #self.log.reg(_msg)
-        for _, to_user in enumerate(self.users_list):
-            if to_user.group == _user.group:
-                self.msg.send(to_user.client, _msg)
+        group_users = [u for u in self.users_list if u.group == _user.group]
+        map(lambda u: self.msg.send(u.client,_msg),group_users)
+
+    def server_send(self, _user, _text):
+        """ok"""
+        msg = {
+            "text" : _text,
+            "type" : "server",
+            "from" : "@server",
+            "to" : _user.nick
+        }
+        self.msg.send(_user.client, msg)
+
+    def com_list(self, _data, _user):
+        """ok"""
+        if _data == "description":
+            return "/list : When in a group show a list of users, " + \
+            "when not show a list of groups."
+
+        if not self.groups_dict:
+            self.server_send(_user, "There are no groups in this server :(")
+            return
+
+        text = ""
+        if _user.group == "":
+            text += "List of groups in this server:\n"
+            for key, _ in self.groups_dict.items():
+                text += key+"\n"
+        else:
+            group_users = [u for u in self.users_list
+                           if u.group == _user.group]
+            text += "List of users in: " + _user.group + "\n"
+            for _, usr in enumerate(group_users):
+                text += usr.nick + "\n"
+
+        self.server_send(_user, text)
 
     def com_away(self, _data, _user):
+        """ok"""
         if _data == "description":
             return "/away : set your status to afk and not receive "+ \
             "private mensages."
@@ -124,71 +160,45 @@ class Server(object):
         }
         self.send_to_all(_user, msg)
 
-
     def com_delete(self, _data, _user):
+        """ok"""
         if _data == "description":
             return "/delete <group name> : Delete a group. Only for group "+ \
             "admin."
 
         group_to_delete = _data[1]
         if _user.key != self.groups_dict[group_to_delete]["admin"].key:
-            msg = {
-                "text" : "You must be admin of "+ group_to_delete + " to " + \
-                "delete the group.",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
+            self.server_send(_user, "You must be admin of "+ \
+            group_to_delete + " to delete the group.")
             return
 
         for usr in self.users_list:
             if usr.group == group_to_delete:
-                msg = {
-                    "text" : group_to_delete + " must be empty " + \
-                    "before delete.",
-                    "type" : "server",
-                    "from" : "@server",
-                    "to" : _user.nick
-                }
-                self.msg.send(_user.client, msg)
+                self.server_send(_user, group_to_delete + " must be " + \
+                    "empty before delete.")
                 return
 
         del self.groups_dict[group_to_delete]
-        msg = {
-            "text" : group_to_delete + " was deleted",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick
-        }
-        self.msg.send(_user.client, msg)
 
-    def com_kick(self,_data,_user):
+        self.server_send(_user, group_to_delete + " was deleted")
+
+    def com_kick(self, _data, _user):
+        """ok"""
         if _data == "description":
             return "/kick <nick> : Kick user from group. Only for group admin."
 
         if _user.group == "":
-            msg = {
-                "text" : "You must in a group and be admin of group to "+ \
-                 "kick anyone.",
-                "from" : "@server",
-                "type" : "server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
+            self.server_send(_user, "You must in a group and be admin of "+ \
+                "group to kick anyone.")
             return
 
         if _user.key != self.groups_dict[_user.group]["admin"].key:
-            msg = {
-                "text" : "You must be admin of group to kick anyone.",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
+            self.server_send(_user, "You must be admin of group to kick " + \
+                "anyone.")
             return
 
         nick_to_kick = _data[1]
+
         for usr in self.users_list:
             if usr.nick == nick_to_kick:
                 if usr.group == _user.group:
@@ -200,35 +210,19 @@ class Server(object):
                         "to" : "@all"
                     }
                     self.send_to_all(_user, msg)
-                    leave="/leave"
+                    leave = "/leave"
                     self.manage_coms(leave, usr)
-                    msg = {
-                        "text" : "You has been kicked from group " + \
-                        _user.group,
-                        "type" : "server",
-                        "from" : "@server",
-                        "to" : _user.nick
-                    }
-                    self.msg.send(_user.client, msg)
+
+                    self.server_send(_user, "You has been kicked from " + \
+                    "group" + _user.group)
                     return
                 else:
-                    msg = {
-                        "text" : nick_to_kick + " isn't in this group",
-                        "type" : "server",
-                        "from" : "@server",
-                        "to" : _user.nick
-                    }
-                    self.msg.send(_user.client, msg)
+                    self.server_send(_user, nick_to_kick + \
+                    " isn't in this group")
                     return
-        msg = {
-            "text" : nick_to_kick + " does not exists.",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick
-        }
-        self.msg.send(_user.client, msg)
-        return
 
+        self.server_send(_user, nick_to_kick + " does not exists.")
+        return
 
     def com_clear(self,_data,_user):
         if _data == "description":
@@ -247,6 +241,7 @@ class Server(object):
             return "/leave <group name> : leave a chat group"
 
         if _user.group == "":
+
             msg = {
                 "text" : "Before leave a group, you must be in a group @_@",
                 "type" : "server",
@@ -264,8 +259,8 @@ class Server(object):
             }
             setattr(_user, 'away', False)
             setattr(_user, 'group', "")
-            self.msg.send(_user.client, msg)
 
+            self.msg.send(_user.client, msg)
 
     def com_join(self, _data, _user):
         """ok"""
@@ -275,37 +270,20 @@ class Server(object):
         group = _data[1]
 
         if group not in self.groups_dict:
-            msg = {
-                "text" : "Group " + group + " don't exist. Try again",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
+            self.server_send(_user, "Group " + group + " don't exist. " + \
+            "Try again")
             return
 
         if _user.group != "":
-            msg = {
-                "text" : "Before join to " + group + " you need leave " + \
-                _user.group,
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
+            self.server_send(_user, "Before join to " + group + " you " +\
+            "need leave " + _user.group)
             return
 
         if "ban" in self.groups_dict[group]:
             for usr in self.groups_dict[group]["ban"]:
                 if usr.key == _user.key:
-                    msg = {
-                        "text" : "You are banned from group " + group + \
-                        ". You cannot join this group anymore.",
-                        "type" : "server",
-                        "from" : "@server",
-                        "to" : _user.nick
-                    }
-                    self.msg.send(_user.client, msg)
+                    self.server_send(_user, "You are banned from group " + \
+                    group + ". You cannot join this group anymore.")
                     return
 
         setattr(_user, 'group', group)
@@ -317,7 +295,6 @@ class Server(object):
             "to" : _user.nick
         }
         self.msg.send(_user.client, msg)
-
 
     def com_create(self, _data, _user):
         """ok"""
@@ -412,14 +389,13 @@ class Server(object):
 
     def com_msg_of_day(self, _user):
         """ok"""
-        msg = {
-            "text" : "Welcome\n",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick,
-        }
-        #self.log.reg(msg)
-        self.msg.send(_user.client, msg)
+        text = "Today is a very good day to "
+        motd = open("lib/motd.txt", 'r')
+        lines = motd.readlines()
+        self.server_send(
+            _user,
+            text + lines[int(random.uniform(0, len(lines)))]
+        )
         self.com_help("", _user)
 
     def com_quit(self, _data, _user):
@@ -445,15 +421,7 @@ class Server(object):
             method_call = getattr(self, method, lambda: "com_error")
             ans += method_call("description", _user) + "\n"
 
-        msg = {
-            "text" : "\n" + ans,
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick,
-        }
-        #self.log.reg(msg)
-        self.msg.send(_user.client, msg)
-        #return True
+        self.server_send(_user, "\n" + ans)
 
     def com_msg(self, _data, _user):
         """verifica o comando recebido para chamar o respectivo método"""
@@ -501,7 +469,6 @@ class Server(object):
                 "to" : _user.nick,
             }
             self.msg.send(_user.client, msg)
-
 
     def com_error(self,_data, _user):
         """executado quando o comando enviado nao esta na coms_list"""
