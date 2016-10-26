@@ -5,12 +5,17 @@ from lib.server import Server
 from lib.client import Client
 
 def server(_port):
-    """função para iniciar no modo servidor"""
+    """função para iniciar no modo servidor
+    @param _port the port of server.
+    """
     print "Application inicialized as server"
     Server('', _port).listen()
 
 def client(_ip, _port):
-    """função para iniciar no modo cliente"""
+    """função para iniciar no modo cliente
+    @param _ip IP os server.
+    @param _ip port of server.
+    """
     print "Application inicialized as client"
     Client(_ip, _port)
 

@@ -2,8 +2,9 @@
 """Módulo de Cliente"""
 import threading
 import socket
-import sys
 import atexit
+import base64
+import ntpath
 from lib.msg import Msg
 from lib.window import Window
 
@@ -70,13 +71,30 @@ class Client(object):
                 send = self.window.tex.gather().rstrip("\n").strip()
                 self.window.prompt.clear()
                 self.window.prompt.refresh()
+
                 if send:
-                    msg = {
-                        "text" : send,
-                        "type" : "client",
-                        "from" : "nick",
-                        "to" : "@server",
-                    }
+
+                    com_test = send.split(" ")
+                    if com_test[0] == "/file":
+                        bin_file = open(com_test[1], "rb")
+                        b64file = base64.b64encode(bin_file.read())
+                        head, tail = ntpath.split(com_test[1])
+                        file_name = tail or ntpath.basename(head)
+                        msg = {
+                            "text" : send,
+                            "file" : b64file,
+                            "file_name" : file_name,
+                            "type" : "file",
+                            "nick" : "nick"
+
+                        }
+                    else:
+                        msg = {
+                            "text" : send,
+                            "type" : "client",
+                            "from" : "nick",
+                            "to" : "@server",
+                        }
                     self.msg.send(self.sock, msg) # cliente.envia_msg(envio)
         except KeyboardInterrupt:
             self.sock.close()
