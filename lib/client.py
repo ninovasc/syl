@@ -5,6 +5,8 @@ import socket
 import atexit
 import base64
 import ntpath
+import sys
+from time import gmtime, strftime
 from lib.msg import Msg
 from lib.window import Window
 
@@ -48,6 +50,16 @@ class Client(object):
                 if "type" in ans:
                     if ans["type"] == "clear":
                         self.window.clear_data()
+                    if ans["type"] == "file":
+                        file_time = strftime("%Y%m%d%H%M%S", gmtime())
+                        bin_file = base64.b64decode(ans["file"])
+                        new_file = open(file_time + ans["file_name"], "wb")
+                        new_file.write(bin_file)
+                        new_file.close()
+                        ans["text"] = "file saved on: " + sys.path[0] + "/" + \
+                        file_time + ans["file_name"]
+
+
                     if ans["type"] == "quit":
                         break
 
@@ -59,7 +71,7 @@ class Client(object):
                     ") > " + ans["to"] + " " + ans["text"]+"\n", "private")
                 else:
                     self.window.addstr_data(ans["from"] + " > " + \
-                    ans["text"]+"\n","text")
+                    ans["text"]+"\n", "text")
         #
         self.thread_send.stop()
         self.thread_listen.stop()
@@ -78,6 +90,7 @@ class Client(object):
                     if com_test[0] == "/file":
                         bin_file = open(com_test[1], "rb")
                         b64file = base64.b64encode(bin_file.read())
+                        bin_file.close()
                         head, tail = ntpath.split(com_test[1])
                         file_name = tail or ntpath.basename(head)
                         msg = {
@@ -85,7 +98,8 @@ class Client(object):
                             "file" : b64file,
                             "file_name" : file_name,
                             "type" : "file",
-                            "nick" : "nick"
+                            "from" : "nick",
+                            "to":"@server"
 
                         }
                     else:

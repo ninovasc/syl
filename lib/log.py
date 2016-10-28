@@ -27,3 +27,6 @@ class Log(object):
             separators=(',', ': ')
         )+"\n")
         log_file.close()
+# ,
+#             sort_keys=True,
+#             indent=4 #separators=(',', ': ')

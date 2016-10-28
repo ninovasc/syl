@@ -9,8 +9,10 @@ def server(_port):
     @param _port the port of server.
     """
     print "Application inicialized as server"
-    Server('', _port).listen()
-
+    try:
+        Server('', _port).listen()
+    except:
+        raise
 def client(_ip, _port):
     """função para iniciar no modo cliente
     @param _ip IP os server.

@@ -3,7 +3,8 @@
 import socket
 import threading
 import random
-import base64
+#import base64
+import sys
 from lib.files_db import Files_DB
 from lib.msg import Msg
 from lib.user import User
@@ -18,21 +19,22 @@ class Server(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.ip_addr, self.port))
-        Files_DB("server").create("server")
+        Files_DB().create("server")
         self.coms_list = {
-            '/help': "com_help",
-            '/msg': "com_msg",
-            '/nick': "com_nick",
-            '/create':"com_create",
-            '/join':"com_join",
-            '/leave':"com_leave",
-            '/clear':"com_clear",
-            '/kick': "com_kick",
-            '/delete': "com_delete",
             '/away': "com_away",
+            '/clear':"com_clear",
+            '/create':"com_create",
+            '/delete': "com_delete",
+            '/file': "com_file",
+            '/get_file': "com_get_file",
+            '/help': "com_help",
+            '/join':"com_join",
+            '/kick': "com_kick",
+            '/leave':"com_leave",
             '/list': "com_list",
-            '/file' : "com_file",
-            '/list_files' : "com_list_files"
+            '/list_files': "com_list_files",
+            '/msg': "com_msg",
+            '/nick': "com_nick"
         }
         self.users_list = []
         self.groups_dict = {}
@@ -44,25 +46,30 @@ class Server(object):
         """ok"""
         self.sock.listen(5)
         while True:
-            client, addr = self.sock.accept()
-            self.last_user_key = self.last_user_key+1
-            user = User(
-                self.last_user_key,
-                client, addr,
-                "new_user"+str(self.last_user_key),
-                "")
-            self.users_list.append(user)
-            print "New Client connected"
-            #client.settimeout(60)
-            threading.Thread(
-                target=self.list_client,
-                args=(user, )).start()
+            try:
+                client, addr = self.sock.accept()
+                self.last_user_key = self.last_user_key+1
+                user = User(
+                    self.last_user_key,
+                    client, addr,
+                    "new_user"+str(self.last_user_key),
+                    "")
+                self.users_list.append(user)
+                print "New Client connected"
+                #client.settimeout(60)
+                threading.Thread(
+                    target=self.list_client,
+                    args=(user, )).start()
+            except:
+                self.sock.close()
+                print "error on server! Server is dead!"
+                raise
 
     def list_client(self, _user):
         """ok"""
         self.com_msg_of_day(_user)
         while True:
-            #try:
+            # try:
             data = self.msg.receive(_user.client)
             if data:
                 if data["text"][:1] == '/':
@@ -71,8 +78,8 @@ class Server(object):
                 else:
                     if _user.group == "":
                         msg = {
-                            "text" : "It's necessary be into a room to " + \
-                            "send a mensage",
+                            "text" : "It's necessary be into a room " + \
+                            "to send a mensage",
                             "type" : "server",
                             "from" : "@server",
                             "to" : _user.nick,
@@ -87,13 +94,25 @@ class Server(object):
                         }
                         setattr(_user, 'away', False)
                         self.send_to_all(_user, msg)
-            else:
-                raise error('Client disconnected')
+            # except:
+            #     print "error on user: " + _user.nick + ", user removed " + \
+            #     "from server."
+            #     self.users_list.remove(_user)
+            #     break
+
 
     def send_to_all(self, _user, _msg):
         """ok"""
         group_users = [u for u in self.users_list if u.group == _user.group]
-        map(lambda u: self.msg.send(u.client,_msg),group_users)
+        #map(lambda u: self.msg.send(u.client,_msg),group_users)
+        #cant use map because an user can be dead
+        for _, usr in enumerate(group_users):
+            try:
+                self.msg.send(usr.client, _msg)
+            except:
+                print "error on user: " + usr.nick + ", user removed " + \
+                "from server."
+                self.users_list.remove(usr)
 
     def server_send(self, _user, _text):
         """ok"""
@@ -105,20 +124,51 @@ class Server(object):
         }
         self.msg.send(_user.client, msg)
 
+    def com_get_file(self,_data, _user, _full_msg={}):
+        if _data == "description":
+            return "/get_file <file name> - get a file of group"
+
+        #try:
+
+        if _user.group == "":
+            self.server_send(_user, "You must be in a group to get files")
+            return
+        file_name = _data[1]
+
+        b64file = Files_DB().file_by_name_group(file_name, _user.group)
+
+        if not b64file:
+            self.server_send(_user, "Fail to get file, check file name.")
+            return
+
+        msg = {
+            "file": b64file,
+            "file_name": file_name,
+            "type": "file",
+            "from": "@server",
+            "to": _user.nick
+        }
+        self.msg.send(_user.client, msg)
+        # except:
+
+        #     print "Unexpected error on /get_file:", sys.exc_info()[0]
+        #     self.server_send(_user, "Error on /get_file. Try again. " + \
+        #     "If you need: /help")
+
     def com_list_files(self,_data, _user, _full_msg={}):
         if _data == "description":
             return "/list_files - List files in the group"
 
         if _user.group == "":
-            self.server_send(_user, "You need to be in a group to list files")
+            self.server_send(_user, "You must be in a group to list files")
             return
 
         text = "List of files in " + _user.group + ":\n"
-        files_db = Files_DB("server")
-        file_names = files_db.file_names_by_group(_user.group)
+        file_names = Files_DB().file_names_by_group(_user.group)
         print file_names
-        for _, name in file_names:
-            text += name + "\n"
+
+        for _, file_name in enumerate(d['FILE_NAME'] for d in file_names):
+            text += file_name + "\n"
 
         self.server_send(_user, text)
 
@@ -129,11 +179,11 @@ class Server(object):
         if _user.group == "":
             self.server_send(_user, "You need to be in a group to send files")
             return
-        files_db = Files_DB("server")
-        files_db.insert_file(
+
+        Files_DB().insert_file(
             _user.group,
             _full_msg["file_name"],
-            base64.b64decode(_full_msg["file"])
+            _full_msg["file"] #base64.b64decode(_full_msg["file"])
         )
         msg = {
             "text" : _user.nick + " has send a new file! File name is: " + \
@@ -155,6 +205,7 @@ class Server(object):
             return
 
         text = ""
+
         if _user.group == "":
             text += "List of groups in this server:\n"
             for key, _ in self.groups_dict.items():
@@ -209,63 +260,79 @@ class Server(object):
             return "/delete <group name> : Delete a group. Only for group "+ \
             "admin."
 
-        group_to_delete = _data[1]
-        if _user.key != self.groups_dict[group_to_delete]["admin"].key:
-            self.server_send(_user, "You must be admin of "+ \
-            group_to_delete + " to delete the group.")
-            return
+        try:
 
-        for usr in self.users_list:
-            if usr.group == group_to_delete:
-                self.server_send(_user, group_to_delete + " must be " + \
-                    "empty before delete.")
+            group_to_delete = _data[1]
+            if _user.key != self.groups_dict[group_to_delete]["admin"].key:
+                self.server_send(_user, "You must be admin of "+ \
+                group_to_delete + " to delete the group.")
                 return
 
-        del self.groups_dict[group_to_delete]
+            group_users = [u for u in self.users_list
+                           if u.group == group_to_delete]
+            if group_users != []:
+                self.server_send(_user, group_to_delete + " must be " + \
+                "empty before delete.")
+                return
 
-        self.server_send(_user, group_to_delete + " was deleted")
+            del self.groups_dict[group_to_delete]
+
+            self.server_send(_user, group_to_delete + " was deleted")
+
+        except:
+
+            print "Unexpected error on /delete:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /delete. Try again. If you " + \
+            "need: /help")
 
     def com_kick(self, _data, _user, _full_msg={}):
         """ok"""
         if _data == "description":
             return "/kick <nick> : Kick user from group. Only for group admin."
+        try:
+            if _user.group == "":
+                self.server_send(_user, "You must in a group and be "+ \
+                "admin of group to kick anyone.")
+                return
 
-        if _user.group == "":
-            self.server_send(_user, "You must in a group and be admin of "+ \
-                "group to kick anyone.")
+            if _user.key != self.groups_dict[_user.group]["admin"].key:
+                self.server_send(_user, "You must be admin of group " + \
+                "to kick anyone.")
+                return
+
+            nick_to_kick = _data[1]
+
+            user_to_kick = next(
+                user for user in self.users_list
+                if user.nick == nick_to_kick)
+
+            if not user_to_kick:
+                self.server_send(_user, nick_to_kick + " does not exists.")
+                return
+
+            if user_to_kick.group != _user.group:
+                self.server_send(_user, nick_to_kick + " isn't in this group")
+                return
+
+            msg = {
+                "text" : _user.nick + " has kicked " + user_to_kick.nick + \
+                "from group " + _user.group,
+                "type" : "server",
+                "from" : "@server",
+                "to" : "@all"
+            }
+            self.send_to_all(_user, msg)
+            self.server_send(user_to_kick, "You has been kicked from " + \
+            "group" + _user.group)
+            leave = "/leave"
+            self.manage_coms(leave, user_to_kick)
             return
 
-        if _user.key != self.groups_dict[_user.group]["admin"].key:
-            self.server_send(_user, "You must be admin of group to kick " + \
-                "anyone.")
-            return
+        except:
 
-        nick_to_kick = _data[1]
-
-        for usr in self.users_list:
-            if usr.nick == nick_to_kick:
-                if usr.group == _user.group:
-                    msg = {
-                        "text" : _user.nick + " has kicked " + usr.nick + \
-                        "from group " + _user.group,
-                        "type" : "server",
-                        "from" : "@server",
-                        "to" : "@all"
-                    }
-                    self.send_to_all(_user, msg)
-                    leave = "/leave"
-                    self.manage_coms(leave, usr)
-
-                    self.server_send(_user, "You has been kicked from " + \
-                    "group" + _user.group)
-                    return
-                else:
-                    self.server_send(_user, nick_to_kick + \
-                    " isn't in this group")
-                    return
-
-        self.server_send(_user, nick_to_kick + " does not exists.")
-        return
+            print "Unexpected error on /kick:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /kick. Try again. If you " + \
+            "need: /help")
 
     def com_clear(self,_data,_user, _full_msg={}):
         if _data == "description":
@@ -343,66 +410,13 @@ class Server(object):
         """ok"""
         if _data == "description":
             return "/create <group name> : create a chat group"
+        try:
+            new_group_name = _data[1]
 
-        new_group_name = _data[1]
-
-        if (" " in new_group_name) or len(new_group_name) > 50:
-            msg = {
-                "text" : "Group name must contains less than 50 caracters " + \
-                "and must not contains spaces",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick,
-            }
-            self.msg.send(_user.client, msg)
-            return
-
-        if new_group_name in self.groups_dict:
-            msg = {
-                "text" : "Group " + new_group_name + " already exists. " + \
-                "Try another name.",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick,
-            }
-            self.msg.send(_user.client, msg)
-
-        self.groups_dict[new_group_name] = {"admin": _user}
-
-        msg = {
-            "text" : "Group " + new_group_name + " was created ",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick,
-        }
-        self.msg.send(_user.client, msg)
-        join = {"text" : "/join " + new_group_name}
-        self.manage_coms(join, _user)
-
-    def com_nick(self, _data, _user, _full_msg={}):
-        """ok"""
-        if _data == "description":
-            return "/nick <new nick> : Change user nickname"
-
-        new_nick = _data[1]
-        old_nick = _user.nick
-
-        if (" " in new_nick) or len(new_nick) > 50:
-            msg = {
-                "text" : "Nickname must contains less than 50 caracters " + \
-                "and must not contains spaces",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick,
-            }
-            self.msg.send(_user.client, msg)
-            return
-
-        for usr in self.users_list:
-            if usr.nick == new_nick:
+            if (" " in new_group_name) or len(new_group_name) > 50:
                 msg = {
-                    "text" : "You can't change your nickname to " + new_nick +\
-                    " because this already is used.",
+                    "text" : "Group name must contains less than 50 caracters " + \
+                    "and must not contains spaces",
                     "type" : "server",
                     "from" : "@server",
                     "to" : _user.nick,
@@ -410,50 +424,90 @@ class Server(object):
                 self.msg.send(_user.client, msg)
                 return
 
+            if new_group_name in self.groups_dict:
+                msg = {
+                    "text" : "Group " + new_group_name + " already exists. " + \
+                    "Try another name.",
+                    "type" : "server",
+                    "from" : "@server",
+                    "to" : _user.nick,
+                }
+                self.msg.send(_user.client, msg)
 
-        setattr(_user, 'nick', new_nick)
+            self.groups_dict[new_group_name] = {"admin": _user}
 
-        msg = {
-            "text" : "Nickname changed, from " + old_nick + " to " + \
-            new_nick,
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick,
-        }
-        #self.log.reg(msg)
-        self.msg.send(_user.client, msg)
-        msg = {
-            "text" : "User " + old_nick + " is now " + new_nick,
-            "type" : "server",
-            "from" : "@server",
-            "to" : "@all",
-        }
-        self.send_to_all(_user, msg)
+            msg = {
+                "text" : "Group " + new_group_name + " was created ",
+                "type" : "server",
+                "from" : "@server",
+                "to" : _user.nick,
+            }
+            self.msg.send(_user.client, msg)
+            join = {"text" : "/join " + new_group_name}
+            self.manage_coms(join, _user)
+        except:
+            print "Unexpected error on /create:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /create. Try again. If you " + \
+            "need: /help")
+
+    def com_nick(self, _data, _user, _full_msg={}):
+        """ok"""
+        if _data == "description":
+            return "/nick <new nick> : Change user nickname"
+
+        try:
+
+            new_nick = _data[1]
+            old_nick = _user.nick
+
+            if (" " in new_nick) or len(new_nick) > 50:
+
+                self.server_send(_user, "Nickname must contains less " + \
+                    "than 50 caracters and must not contains spaces")
+                return
+
+            new_nick_used = [u for u in self.users_list if u.nick == new_nick]
+
+            if new_nick_used != []:
+                self.server_send(_user, "You can't change your nickname " + \
+                " to " + new_nick + " because this already is used.")
+                return
+
+            setattr(_user, 'nick', new_nick)
+
+            self.server_send(_user, "Nickname changed, from " + old_nick + \
+                " to " + new_nick)
+
+            msg = {
+                "text" : "User " + old_nick + " is now " + new_nick,
+                "type" : "server",
+                "from" : "@server",
+                "to" : "@all",
+            }
+            self.send_to_all(_user, msg)
+
+        except:
+
+            print "Unexpected error /nick:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /nick. Try again. If you " + \
+            "need: /help")
 
     def com_msg_of_day(self, _user):
         """ok"""
         text = "Today is a very good day to "
         motd = open("lib/motd.txt", 'r')
         lines = motd.readlines()
-        self.server_send(
-            _user,
-            text + lines[int(random.uniform(0, len(lines)))]
-        )
-        self.com_help("", _user)
+        motd.close()
 
-    def com_quit(self, _data, _user, _full_msg={}):
-        """ok"""
-        if _data == "description":
-            return "Close client application"
         msg = {
-            "text" : "",
-            "type" : "quit",
+            "group": "",
+            "text" : text + lines[int(random.uniform(0, len(lines)))],
+            "type" : "server",
             "from" : "@server",
-            "to" : _user.nick,
+            "to" : _user.nick
         }
-        self.msg.send(_user.client, msg)
-        _user.client.close()
-        _user = None
+        self.msg.send(_user.client,msg)
+        self.com_help("", _user)
 
     def com_help(self, _data, _user, _full_msg={}):
         if _data == "description":
@@ -468,60 +522,52 @@ class Server(object):
 
     def com_msg(self, _data, _user, _full_msg={}):
         """verifica o comando recebido para chamar o respectivo método"""
+
         if _data == "description":
             return "/msg <nick> <mensage> - Send a private mensage to an " + \
             "specific user in same group"
 
-        to_user = next(
-            user for user in self.users_list
-            if user.nick == _data[1])
+        try:
 
-        if to_user:
-            if to_user.group == _user.group:
-                if to_user.away:
-                    msg = {
-                        "text" : to_user.nick + " is away from keyboard " + \
-                        "and cannot receive private mensage.",
-                        "type" : "server",
-                        "from" : "@server",
-                        "to" : to_user.nick,
-                    }
-                    self.msg.send(_user.client, msg)
-                else:
-                    msg = {
-                        "text" : " ".join(_data[2:]),
-                        "type" : "private",
-                        "from" : _user.nick,
-                        "to" : to_user.nick,
-                    }
-                    self.msg.send(to_user.client, msg)
-                    self.msg.send(_user.client, msg)
-            else:
-                msg = {
-                    "text" : "The user " + _data[1] + " is not in the group.",
-                    "type" : "server",
-                    "from" : "@server",
-                    "to" : _user.nick,
-                }
-                self.msg.send(_user.client, msg)
-        else:
+            to_user = next(
+                user for user in self.users_list
+                if user.nick == _data[1])
+
+            if not to_user:
+                self.server_send(_user, "The user " + _data[1] + "does " + \
+                "not exists.")
+                return
+
+            if to_user.group != _user.group:
+                self.server_send(_user, "The user " + _data[1] + \
+                " is not in the group.")
+                return
+
+            if to_user.away:
+                self.server_send(_user, to_user.nick + " is away from " + \
+                "keyboard and cannot receive private mensage.")
+                return
+
             msg = {
-                "text" : "The user " + _data[1] + "does not exists.",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick,
+                "text" : " ".join(_data[2:]),
+                "type" : "private",
+                "from" : _user.nick,
+                "to" : to_user.nick,
             }
+            self.msg.send(to_user.client, msg)
             self.msg.send(_user.client, msg)
+
+        except:
+
+            print "Unexpected error /msg:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /nick. Try again. If you " + \
+            "need: /help")
 
     def com_error(self,_data, _user, _full_msg={}):
         """executado quando o comando enviado nao esta na coms_list"""
-        msg = {
-            "text" : "Unknow command, try again.",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick,
-        }
-        self.msg.send(_user.client, msg)
+
+        self.server_send(_user, "Unknow command, try again. If you need: " + \
+        "/help")
 
     def manage_coms(self, _data, _user):
         """verifica o comando recebido para chamar o respectivo método"""
