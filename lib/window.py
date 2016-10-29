@@ -8,12 +8,15 @@ import traceback
 class Window(object):
     """Classe de parametrizacao e inicializacao do curses"""
     def __init__(self):
+        curses.wrapper(self.start)
 
+    def start(self,std):
         try:
-            self.std = curses.initscr()
+            self.std=std
+            #self.std = curses.initscr()
 
-            curses.start_color()
-            curses.use_default_colors()
+            #curses.start_color()
+            #curses.use_default_colors()
 
             gray = curses.COLOR_WHITE + 1
             curses.init_color(gray, 200, 200, 200)
@@ -21,6 +24,8 @@ class Window(object):
             curses.init_color(blue, 400, 400, 1000)
             red = blue + 1
             curses.init_color(red, 1000, 400, 400)
+            max_red = red + 1
+            curses.init_color(red, 1000, 0, 0)
 
             curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
             self.text_color=curses.color_pair(1)
@@ -37,13 +42,16 @@ class Window(object):
             curses.init_pair(5, red, curses.COLOR_BLACK)
             self.private_color=curses.color_pair(5)
 
+            curses.init_pair(6, red, curses.COLOR_BLACK)
+            self.error_color=curses.color_pair(6)
+
             self.std.bkgdset(ord(' '), self.text_color)
             self.std.clear()
             self.std.refresh()
 
-            curses.noecho()
-            curses.cbreak()
-            self.std.keypad(1)
+            #curses.noecho()
+            #curses.cbreak()
+            #self.std.keypad(1)
 
             self.header = self.std.subwin(1, curses.COLS, 0, 0)
             self.header.bkgdset(ord(' '), self.header_color)
@@ -65,10 +73,10 @@ class Window(object):
             #rectangle(self.input_retangle, curses.LINES - 3, 0, curses.LINES - 1, curses.COLS - 2)
             self.tex = Textbox(self.prompt)
 
-            self.std.keypad(0)
-            curses.echo()
-            curses.nocbreak()
-            curses.endwin()
+            #self.std.keypad(0)
+            #curses.echo()
+            #curses.nocbreak()
+            #curses.endwin()
 
         except:
 
@@ -80,10 +88,11 @@ class Window(object):
 
     def close(self):
         """Metodo para finalizar o curses"""
-        self.std.keypad(0)
-        curses.echo()
-        curses.nocbreak()
+        #self.std.keypad(0)
+        #curses.echo()
+        #curses.nocbreak()
         curses.endwin()
+
 
     def addstr_header(self, _str):
         self.header.addstr(_str, self.header_color)
@@ -94,6 +103,8 @@ class Window(object):
             self.data.addstr(_str, self.server_color)
         elif _type == "private":
             self.data.addstr(_str, self.private_color)
+        elif _type == "error":
+            self.data.addstr(_str, self.error_color)
         else:
             self.data.addstr(_str, self.text_color)
         self.data.refresh()

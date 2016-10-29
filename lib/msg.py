@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import struct
 import json
-from lib.log import Log
 from time import gmtime, strftime
+from lib.log import Log
+
 
 class Msg(object):
     """Classe para transito de mensagens, responsável
@@ -50,8 +51,12 @@ class Msg(object):
         len_msg = struct.unpack('>I', len_msg_size)[0]
         # Le os dados da mensagem
         msg = self.receive_all(_client, len_msg)
+        dict_msg = json.loads(msg)
 
-        return json.loads(msg)
+        if self.log != None:
+            self.log.reg(dict_msg)
+
+        return dict_msg
 
     def receive_all(self,_client, size):
 

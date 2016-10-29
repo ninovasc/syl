@@ -22,6 +22,7 @@ class Server(object):
         Files_DB().create("server")
         self.coms_list = {
             '/away': "com_away",
+            '/ban': "com_ban",
             '/clear':"com_clear",
             '/create':"com_create",
             '/delete': "com_delete",
@@ -41,7 +42,7 @@ class Server(object):
         self.last_user_key = 0
         self.msg = Msg("server" + _port+ "-", True)
         #self.log = Log("server-"+_port)
-
+        self.trds_dict = {}
     def listen(self):
         """ok"""
         self.sock.listen(5)
@@ -55,11 +56,14 @@ class Server(object):
                     "new_user"+str(self.last_user_key),
                     "")
                 self.users_list.append(user)
+
                 print "New Client connected"
                 #client.settimeout(60)
-                threading.Thread(
+                new_trd = threading.Thread(
                     target=self.list_client,
-                    args=(user, )).start()
+                    args=(user, ))
+                self.trds_dict[user.key] = new_trd
+                new_trd.start()
             except:
                 self.sock.close()
                 print "error on server! Server is dead!"
@@ -67,39 +71,40 @@ class Server(object):
 
     def list_client(self, _user):
         """ok"""
-        self.com_msg_of_day(_user)
-        while True:
-            # try:
-            data = self.msg.receive(_user.client)
-            if data:
-                if data["text"][:1] == '/':
-                    #print 'entrou if'
-                    self.manage_coms(data, _user)
-                else:
-                    if _user.group == "":
-                        msg = {
-                            "text" : "It's necessary be into a room " + \
-                            "to send a mensage",
-                            "type" : "server",
-                            "from" : "@server",
-                            "to" : _user.nick,
-                        }
-                        self.msg.send(_user.client, msg)
+        try:
+            self.com_msg_of_day(_user)
+            while True:
+                # try:
+                data = self.msg.receive(_user.client)
+                if data:
+                    if data["text"][:1] == '/':
+                        #print 'entrou if'
+                        self.manage_coms(data, _user)
                     else:
-                        msg = {
-                            "text" : data["text"],
-                            "type" : "server",
-                            "from" : _user.nick,
-                            "to" : "@all",
-                        }
-                        setattr(_user, 'away', False)
-                        self.send_to_all(_user, msg)
-            # except:
+                        if _user.group == "":
+                            msg = {
+                                "text" : "It's necessary be into a room " + \
+                                "to send a mensage",
+                                "type" : "server",
+                                "from" : "@server",
+                                "to" : _user.nick,
+                            }
+                            self.msg.send(_user.client, msg)
+                        else:
+                            msg = {
+                                "text" : data["text"],
+                                "type" : "server",
+                                "from" : _user.nick,
+                                "to" : "@all",
+                            }
+                            setattr(_user, 'away', False)
+                            self.send_to_all(_user, msg)
+        except:
+            pass
             #     print "error on user: " + _user.nick + ", user removed " + \
             #     "from server."
             #     self.users_list.remove(_user)
             #     break
-
 
     def send_to_all(self, _user, _msg):
         """ok"""
@@ -123,6 +128,66 @@ class Server(object):
             "to" : _user.nick
         }
         self.msg.send(_user.client, msg)
+
+    def com_ban(self, _data, _user, _full_msg={}):
+        """ok"""
+        if _data == "description":
+            return "/ban <nick> : Banish user from group. Only for " + \
+            "group admin."
+        try:
+            if _user.group == "":
+                self.server_send(_user, "You must in a group and be "+ \
+                "admin of group to banish anyone.")
+                return
+
+            if _user.key != self.groups_dict[_user.group]["admin"].key:
+                self.server_send(_user, "You must be admin of group " + \
+                "to banish anyone.")
+                return
+
+            nick_to_ban = _data[1]
+
+            user_to_ban = next(
+                user for user in self.users_list
+                if user.nick == nick_to_ban)
+
+            if not user_to_ban:
+                self.server_send(_user, nick_to_ban + " does not exists.")
+                return
+
+            if user_to_ban.group != _user.group:
+                self.server_send(_user, nick_to_ban + " isn't in this group")
+                return
+
+            if user_to_ban.key == _user.key:
+                self.server_send(_user, "You can't bannish yourself!")
+                return
+
+            if "ban" not in self.groups_dict[_user.group]:
+                self.groups_dict[_user.group]["ban"] = []
+
+            self.groups_dict[_user.group]["ban"].append(user_to_ban)
+
+            msg = {
+                "text" : _user.nick + " has banished " + user_to_ban.nick + \
+                " from group " + _user.group,
+                "type" : "server",
+                "from" : "@server",
+                "to" : "@all"
+            }
+            self.send_to_all(_user, msg)
+
+            self.server_send(user_to_ban, "You has been banished from " + \
+            "group" + _user.group)
+            leave = {"text": "/leave"}
+            self.manage_coms(leave, user_to_ban)
+            return
+
+        except:
+
+            print "Unexpected error on /ban:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /ban. Try again. If you " + \
+            "need: /help")
 
     def com_get_file(self,_data, _user, _full_msg={}):
         if _data == "description":
@@ -324,7 +389,7 @@ class Server(object):
             self.send_to_all(_user, msg)
             self.server_send(user_to_kick, "You has been kicked from " + \
             "group" + _user.group)
-            leave = "/leave"
+            leave = {"text": "/leave"}
             self.manage_coms(leave, user_to_kick)
             return
 
@@ -348,16 +413,28 @@ class Server(object):
 
     def com_leave(self,_data,_user, _full_msg={}):
         if _data == "description":
-            return "/leave <group name> : leave a chat group"
+            return "/leave <group name> : leave a chat group or quit chat " + \
+            "when not in a group"
 
         if _user.group == "":
 
             msg = {
-                "text" : "Before leave a group, you must be in a group @_@",
-                "type" : "server",
+                "text" : "bye!",
+                "type" : "quit",
                 "from" : "@server",
                 "to" : _user.nick
             }
+            self.msg.send(_user.client, msg)
+            trd = self.trds_dict[_user.key]
+
+            del self.trds_dict[_user.key]
+            self.users_list.remove(_user)
+            print "Thread of user " + _user.nick + " has ended. User was" + \
+            "removed from list"
+            trd.join()
+
+
+
         else:
             old_group = _user.group
             msg = {
@@ -369,7 +446,6 @@ class Server(object):
             }
             setattr(_user, 'away', False)
             setattr(_user, 'group', "")
-
             self.msg.send(_user.client, msg)
 
     def com_join(self, _data, _user, _full_msg={}):

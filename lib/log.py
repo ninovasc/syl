@@ -1,14 +1,22 @@
 # -*- coding: utf-8 -*-
-"""modulo de criação de log"""
+"""
+Log module
+"""
 from time import gmtime, strftime
 import json
 
 class Log(object):
-    """classe de log"""
+    """
+    @brief      Class for log.
+    """
 
     def __init__(self, _type):
-        """método de inicialização que recebe _tipo para ser utlizado como
-        parte do nome do arquivo de log"""
+        """
+        @brief      Constructs the object. Receive _type to use in file name.
+
+        @param      self   The object
+        @param      _type  The type
+        """
         self.type = _type
         self.time = strftime("%Y%m%d%H%M%S", gmtime())
         log_file = open(self.type+self.time + ".log", 'w')
@@ -16,7 +24,14 @@ class Log(object):
         log_file.close()
 
     def reg(self, _reg):
-        """modulo de registro de cada entrada do log"""
+        """
+        @brief      Method to register each entry of log.
+
+        @param      self  The object
+        @param      _reg  The register
+
+        @return     This is a void method, only writes a entry in log file.
+        """
         reg_time = strftime("%Y%m%d%H%M%S", gmtime())
         log_file = open(self.type+self.time + ".log", 'a')
         _reg["time"] = reg_time
@@ -27,6 +42,3 @@ class Log(object):
             separators=(',', ': ')
         )+"\n")
         log_file.close()
-# ,
-#             sort_keys=True,
-#             indent=4 #separators=(',', ': ')

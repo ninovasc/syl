@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
-"""modulo principal para chamar a aplicação em modo cliente ou servidor"""
+"""
+Application main module, can call app in client or server mode.
+From command line call 'python app.py client {ip} {port}' to start as
+client or call 'python app.py server {port}' to start as server.
+"""
 import sys
 from lib.server import Server
 from lib.client import Client
 
 def server(_port):
-    """função para iniciar no modo servidor
-    @param _port the port of server.
+    """
+    @brief      Starts app as server
+
+    @param      _port  The port
+
+    @return     return one server
     """
     print "Application inicialized as server"
     try:
@@ -14,15 +22,23 @@ def server(_port):
     except:
         raise
 def client(_ip, _port):
-    """função para iniciar no modo cliente
-    @param _ip IP os server.
-    @param _ip port of server.
+    """
+    @brief      Starts app as client
+
+    @param      _port  The port
+
+    @return     return one client
     """
     print "Application inicialized as client"
-    Client(_ip, _port)
+    try:
+        Client(_ip, _port)
+    except:
+        pass
 
 if __name__ == "__main__":
-
+    """
+    Mains function of module.
+    """
     ERROR_MSG = "Is necessary use arguments to inicialize this application\n"
     "{server port|client ip port}"
     if len(sys.argv) == 1:
