@@ -1,0 +1,321 @@
+\hypertarget{classlib_1_1window_1_1_window}{}\section{lib.\+window.\+Window Class Reference}
+\label{classlib_1_1window_1_1_window}\index{lib.\+window.\+Window@{lib.\+window.\+Window}}
+
+
+Class for window control using Curses.  
+
+
+
+
+Inherits \hyperlink{classobject}{object}.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classlib_1_1window_1_1_window_ad1dc79017b0ccc059db34a9c25acd989}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em Constructs the object. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_a389bc9bf90590f81625076f0aeacba10}{start} (self, \hyperlink{classlib_1_1window_1_1_window_a9b20669f15ee40985bd201e54984bf7f}{std})
+\begin{DoxyCompactList}\small\item\em Start all Curses windows\+: a standard window, a header window, a data window and a input window. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_a8e231b24713f4cac4a6f0110356758da}{close} (self)
+\begin{DoxyCompactList}\small\item\em \{ function\+\_\+description \} \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_ac2f7ed04407c2581493432ff28f82558}{addstr\+\_\+header} (self, \+\_\+str)
+\begin{DoxyCompactList}\small\item\em Add text to header window. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_a893dd9f303b6e33d0e47356455b6d58d}{addstr\+\_\+data} (self, \+\_\+str, \+\_\+type)
+\begin{DoxyCompactList}\small\item\em Add text to data window, depending of type, the color is different. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_a6b69f59f1e8e67522985a37b34aab6e3}{clear\+\_\+header} (self)
+\begin{DoxyCompactList}\small\item\em Clear header window. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1window_1_1_window_a48311c44458288f29ec758cffa93f801}{clear\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em clear data window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_a9b20669f15ee40985bd201e54984bf7f}{std}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_afccc6790aaab20faf9c796f229f6a4b1}{text\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_ad231d19f8aad80c6db88f99956dc50ac}{header\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_a23b8ad80913c9c9f14d42d3f89523207}{input\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_abd0c48e37370c0f7cbd451918febada7}{server\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_a5bdf660bc0b8a07cb9b8cf0d2f3e7623}{private\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_ab54668afdb1ccfa2254ee87a05a75ff0}{error\+\_\+color}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_a5f6d8dd04b33823324ca124b7325c30e}{header}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_a00641db04214b59c03f9b8801aa95950}{data}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_af5f5e6043dbcefb2744db2ea1afe7b54}{prompt}
+\item 
+\hyperlink{classlib_1_1window_1_1_window_abab7f0c56567d8300daf6082907b122a}{tex}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for window control using Curses. 
+
+Definition at line 15 of file window.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self)}{__init__(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_ad1dc79017b0ccc059db34a9c25acd989}{}\label{classlib_1_1window_1_1_window_ad1dc79017b0ccc059db34a9c25acd989}
+
+
+Constructs the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 22 of file window.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!addstr\+\_\+data@{addstr\+\_\+data}}
+\index{addstr\+\_\+data@{addstr\+\_\+data}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{addstr\+\_\+data(self, \+\_\+str, \+\_\+type)}{addstr_data(self, _str, _type)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+addstr\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+str, }
+\item[{}]{\+\_\+type}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_a893dd9f303b6e33d0e47356455b6d58d}{}\label{classlib_1_1window_1_1_window_a893dd9f303b6e33d0e47356455b6d58d}
+
+
+Add text to data window, depending of type, the color is different. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+str} & The string \\
+\hline
+{\em \+\_\+type} & The type\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 137 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!addstr\+\_\+header@{addstr\+\_\+header}}
+\index{addstr\+\_\+header@{addstr\+\_\+header}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{addstr\+\_\+header(self, \+\_\+str)}{addstr_header(self, _str)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+addstr\+\_\+header (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+str}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_ac2f7ed04407c2581493432ff28f82558}{}\label{classlib_1_1window_1_1_window_ac2f7ed04407c2581493432ff28f82558}
+
+
+Add text to header window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+str} & The string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 122 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!clear\+\_\+data@{clear\+\_\+data}}
+\index{clear\+\_\+data@{clear\+\_\+data}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{clear\+\_\+data(self)}{clear_data(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+clear\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_a48311c44458288f29ec758cffa93f801}{}\label{classlib_1_1window_1_1_window_a48311c44458288f29ec758cffa93f801}
+
+
+clear data window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 168 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!clear\+\_\+header@{clear\+\_\+header}}
+\index{clear\+\_\+header@{clear\+\_\+header}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{clear\+\_\+header(self)}{clear_header(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+clear\+\_\+header (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_a6b69f59f1e8e67522985a37b34aab6e3}{}\label{classlib_1_1window_1_1_window_a6b69f59f1e8e67522985a37b34aab6e3}
+
+
+Clear header window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 156 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!close@{close}}
+\index{close@{close}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{close(self)}{close(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+close (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_a8e231b24713f4cac4a6f0110356758da}{}\label{classlib_1_1window_1_1_window_a8e231b24713f4cac4a6f0110356758da}
+
+
+\{ function\+\_\+description \} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{ description\+\_\+of\+\_\+the\+\_\+return\+\_\+value \} 
+\end{DoxyReturn}
+
+
+Definition at line 106 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!start@{start}}
+\index{start@{start}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{start(self, std)}{start(self, std)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+window.\+Window.\+start (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{std}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1window_1_1_window_a389bc9bf90590f81625076f0aeacba10}{}\label{classlib_1_1window_1_1_window_a389bc9bf90590f81625076f0aeacba10}
+
+
+Start all Curses windows\+: a standard window, a header window, a data window and a input window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em std} & The standard window\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Only create windows to client. 
+\end{DoxyReturn}
+
+
+Definition at line 35 of file window.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!data@{data}}
+\index{data@{data}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{data}{data}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+data}\hypertarget{classlib_1_1window_1_1_window_a00641db04214b59c03f9b8801aa95950}{}\label{classlib_1_1window_1_1_window_a00641db04214b59c03f9b8801aa95950}
+
+
+Definition at line 75 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!error\+\_\+color@{error\+\_\+color}}
+\index{error\+\_\+color@{error\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{error\+\_\+color}{error_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+error\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_ab54668afdb1ccfa2254ee87a05a75ff0}{}\label{classlib_1_1window_1_1_window_ab54668afdb1ccfa2254ee87a05a75ff0}
+
+
+Definition at line 64 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!header@{header}}
+\index{header@{header}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{header}{header}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+header}\hypertarget{classlib_1_1window_1_1_window_a5f6d8dd04b33823324ca124b7325c30e}{}\label{classlib_1_1window_1_1_window_a5f6d8dd04b33823324ca124b7325c30e}
+
+
+Definition at line 70 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!header\+\_\+color@{header\+\_\+color}}
+\index{header\+\_\+color@{header\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{header\+\_\+color}{header_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+header\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_ad231d19f8aad80c6db88f99956dc50ac}{}\label{classlib_1_1window_1_1_window_ad231d19f8aad80c6db88f99956dc50ac}
+
+
+Definition at line 52 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!input\+\_\+color@{input\+\_\+color}}
+\index{input\+\_\+color@{input\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{input\+\_\+color}{input_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+input\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_a23b8ad80913c9c9f14d42d3f89523207}{}\label{classlib_1_1window_1_1_window_a23b8ad80913c9c9f14d42d3f89523207}
+
+
+Definition at line 55 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!private\+\_\+color@{private\+\_\+color}}
+\index{private\+\_\+color@{private\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{private\+\_\+color}{private_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+private\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_a5bdf660bc0b8a07cb9b8cf0d2f3e7623}{}\label{classlib_1_1window_1_1_window_a5bdf660bc0b8a07cb9b8cf0d2f3e7623}
+
+
+Definition at line 61 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!prompt@{prompt}}
+\index{prompt@{prompt}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{prompt}{prompt}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+prompt}\hypertarget{classlib_1_1window_1_1_window_af5f5e6043dbcefb2744db2ea1afe7b54}{}\label{classlib_1_1window_1_1_window_af5f5e6043dbcefb2744db2ea1afe7b54}
+
+
+Definition at line 78 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!server\+\_\+color@{server\+\_\+color}}
+\index{server\+\_\+color@{server\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{server\+\_\+color}{server_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+server\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_abd0c48e37370c0f7cbd451918febada7}{}\label{classlib_1_1window_1_1_window_abd0c48e37370c0f7cbd451918febada7}
+
+
+Definition at line 58 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!std@{std}}
+\index{std@{std}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{std}{std}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+std}\hypertarget{classlib_1_1window_1_1_window_a9b20669f15ee40985bd201e54984bf7f}{}\label{classlib_1_1window_1_1_window_a9b20669f15ee40985bd201e54984bf7f}
+
+
+Definition at line 37 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!tex@{tex}}
+\index{tex@{tex}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{tex}{tex}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+tex}\hypertarget{classlib_1_1window_1_1_window_abab7f0c56567d8300daf6082907b122a}{}\label{classlib_1_1window_1_1_window_abab7f0c56567d8300daf6082907b122a}
+
+
+Definition at line 88 of file window.\+py.
+
+\index{lib\+::window\+::\+Window@{lib\+::window\+::\+Window}!text\+\_\+color@{text\+\_\+color}}
+\index{text\+\_\+color@{text\+\_\+color}!lib\+::window\+::\+Window@{lib\+::window\+::\+Window}}
+\subsubsection[{\texorpdfstring{text\+\_\+color}{text_color}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+window.\+Window.\+text\+\_\+color}\hypertarget{classlib_1_1window_1_1_window_afccc6790aaab20faf9c796f229f6a4b1}{}\label{classlib_1_1window_1_1_window_afccc6790aaab20faf9c796f229f6a4b1}
+
+
+Definition at line 49 of file window.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\hyperlink{window_8py}{window.\+py}\end{DoxyCompactItemize}

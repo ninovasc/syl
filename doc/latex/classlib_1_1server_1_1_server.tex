@@ -1,0 +1,863 @@
+\hypertarget{classlib_1_1server_1_1_server}{}\section{lib.\+server.\+Server Class Reference}
+\label{classlib_1_1server_1_1_server}\index{lib.\+server.\+Server@{lib.\+server.\+Server}}
+
+
+Class for server application mode.  
+
+
+
+
+Inherits \hyperlink{classobject}{object}.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classlib_1_1server_1_1_server_a05e389feb6781a562e7be339b262f225}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, \+\_\+ip\+\_\+addr, \+\_\+port)
+\begin{DoxyCompactList}\small\item\em Constructs the object. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a1d5cf3d4cb594c5b45c1153e2519158a}{listen} (self)
+\begin{DoxyCompactList}\small\item\em When \hyperlink{app_8py}{app.\+py} intances this class this method is called, this method mantain an infinity loop listen socket. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a54bcf5eef81698eb45cb3159e19920f5}{list\+\_\+client} (self, \+\_\+user)
+\begin{DoxyCompactList}\small\item\em When listen method find new user this method is call as a thread, this method manage the communication with users. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a0b25ac2782ce4491215f954a5d40217d}{send\+\_\+to\+\_\+all} (self, \+\_\+user, \+\_\+msg)
+\begin{DoxyCompactList}\small\item\em Sends message to all users in same group as sender. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a054e900a412a025b96f82be3dbdceb80}{server\+\_\+send} (self, \+\_\+user, \+\_\+text)
+\begin{DoxyCompactList}\small\item\em Support method to send message as server for one user. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a01a04db3e7fcf1644df2267b4bce8bf3}{msg\+\_\+of\+\_\+day} (self, \+\_\+user)
+\begin{DoxyCompactList}\small\item\em Send to user a server random initial message from a text file. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a9a4f143acb36a5f11b237d6a32e6aac1}{manage\+\_\+coms} (self, \+\_\+data, \+\_\+user)
+\begin{DoxyCompactList}\small\item\em works like a switch case for commands in server. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a69a54eab9ebf3df833d0bf9512b85997}{com\+\_\+error} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em in case of users call a nonexistent function this method returns a message informing user. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a2ab2a05b00d14c679b2e7582891681ce}{com\+\_\+away} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em set user status to away, in this status user can\textquotesingle{}t receive private messages. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_aa954164c86ddf905d0ed8c48e2b7a087}{com\+\_\+ban} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em This method banish a user from a group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a6f932b1311da5f3b9a49642aea4243d6}{com\+\_\+clear} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em clear client window, this could be implemented only on clien side but to store a log this is managed by server. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_aebcbb98a94de4a22a64a1ee111035076}{com\+\_\+create} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em create a group \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_afa989eaf9afcba0862cec54e9cb35a3c}{com\+\_\+delete} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em Delete group from server. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a094777e00032aedea3b32fb7a46a6781}{com\+\_\+file} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg)
+\begin{DoxyCompactList}\small\item\em receives a file send by user and store in database \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_ae7d89f08e093e3fd65d9a6195abfc2f5}{com\+\_\+get\+\_\+file} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em get a file stored in user group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_af7ebbd5cd66265307ac4f947b5342315}{com\+\_\+help} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em send a list of commands and description to user. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a4cf5a269c6af4b838cd5c1ced1676662}{com\+\_\+join} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em join a group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_ac47e8a01071e003d2c1401a55d055132}{com\+\_\+kick} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em kick user from group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_aca808a3a7ea205cef5c0d556c8b03ecf}{com\+\_\+leave} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em leave a group or a chat if user not in a group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a9fcc590e919c1877295ed150f851b469}{com\+\_\+list} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em list server groups if user isn\textquotesingle{}t in a group or list users of user group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_a17bdb51a017c2a09b95fff98da8d64ad}{com\+\_\+list\+\_\+files} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em Lists files stored on user group. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_ae632e88e7a3e8d83bf8a7efdcab61cf2}{com\+\_\+msg} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em send a private message from one user to another. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1server_1_1_server_aa791030280251ab267ac52f13254147d}{com\+\_\+nick} (self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\{\})
+\begin{DoxyCompactList}\small\item\em changes user nickname. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_a727a355f0e60ea172d2f5a2899fa2f59}{ip\+\_\+addr}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_a2d6cee10cfeca5b851e1f7e9276c9be7}{port}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_a9b368c1b53b943b0170ec7ca5d216af0}{sock}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_acc7e85c3c73a1dc49868f0c27a595690}{coms\+\_\+list}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_afd8269952d012312cd598da1ede38dce}{users\+\_\+list}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_a067972dc62722e52e8fca4d7860f35c2}{groups\+\_\+dict}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_ac63f8503a25052fe55b00c3293be2bbf}{last\+\_\+user\+\_\+key}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_ab4eb49688a65a6fd7c0e483e235ba78c}{msg}
+\item 
+\hyperlink{classlib_1_1server_1_1_server_a630c17611509ad5aafc7d6a9390ee225}{trds\+\_\+dict}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for server application mode. 
+
+Definition at line 18 of file server.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, \+\_\+ip\+\_\+addr, \+\_\+port)}{__init__(self, _ip_addr, _port)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+ip\+\_\+addr, }
+\item[{}]{\+\_\+port}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a05e389feb6781a562e7be339b262f225}{}\label{classlib_1_1server_1_1_server_a05e389feb6781a562e7be339b262f225}
+
+
+Constructs the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+ip\+\_\+addr} & The ip address \\
+\hline
+{\em \+\_\+port} & The port \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 28 of file server.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+away@{com\+\_\+away}}
+\index{com\+\_\+away@{com\+\_\+away}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+away(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_away(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+away (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a2ab2a05b00d14c679b2e7582891681ce}{}\label{classlib_1_1server_1_1_server_a2ab2a05b00d14c679b2e7582891681ce}
+
+
+set user status to away, in this status user can\textquotesingle{}t receive private messages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 266 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+ban@{com\+\_\+ban}}
+\index{com\+\_\+ban@{com\+\_\+ban}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+ban(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_ban(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+ban (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_aa954164c86ddf905d0ed8c48e2b7a087}{}\label{classlib_1_1server_1_1_server_aa954164c86ddf905d0ed8c48e2b7a087}
+
+
+This method banish a user from a group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 317 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+clear@{com\+\_\+clear}}
+\index{com\+\_\+clear@{com\+\_\+clear}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+clear(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_clear(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+clear (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a6f932b1311da5f3b9a49642aea4243d6}{}\label{classlib_1_1server_1_1_server_a6f932b1311da5f3b9a49642aea4243d6}
+
+
+clear client window, this could be implemented only on clien side but to store a log this is managed by server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 390 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+create@{com\+\_\+create}}
+\index{com\+\_\+create@{com\+\_\+create}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+create(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_create(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+create (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_aebcbb98a94de4a22a64a1ee111035076}{}\label{classlib_1_1server_1_1_server_aebcbb98a94de4a22a64a1ee111035076}
+
+
+create a group 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 421 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+delete@{com\+\_\+delete}}
+\index{com\+\_\+delete@{com\+\_\+delete}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+delete(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_delete(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+delete (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_afa989eaf9afcba0862cec54e9cb35a3c}{}\label{classlib_1_1server_1_1_server_afa989eaf9afcba0862cec54e9cb35a3c}
+
+
+Delete group from server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 480 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+error@{com\+\_\+error}}
+\index{com\+\_\+error@{com\+\_\+error}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+error(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_error(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+error (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a69a54eab9ebf3df833d0bf9512b85997}{}\label{classlib_1_1server_1_1_server_a69a54eab9ebf3df833d0bf9512b85997}
+
+
+in case of users call a nonexistent function this method returns a message informing user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 250 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+file@{com\+\_\+file}}
+\index{com\+\_\+file@{com\+\_\+file}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+file(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg)}{com_file(self, _data, _user, _full_msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a094777e00032aedea3b32fb7a46a6781}{}\label{classlib_1_1server_1_1_server_a094777e00032aedea3b32fb7a46a6781}
+
+
+receives a file send by user and store in database 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 530 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+get\+\_\+file@{com\+\_\+get\+\_\+file}}
+\index{com\+\_\+get\+\_\+file@{com\+\_\+get\+\_\+file}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+get\+\_\+file(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_get_file(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+get\+\_\+file (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_ae7d89f08e093e3fd65d9a6195abfc2f5}{}\label{classlib_1_1server_1_1_server_ae7d89f08e093e3fd65d9a6195abfc2f5}
+
+
+get a file stored in user group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 583 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+help@{com\+\_\+help}}
+\index{com\+\_\+help@{com\+\_\+help}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+help(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_help(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+help (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_af7ebbd5cd66265307ac4f947b5342315}{}\label{classlib_1_1server_1_1_server_af7ebbd5cd66265307ac4f947b5342315}
+
+
+send a list of commands and description to user. 
+
+Every method in \textquotesingle{}coms\+\_\+list\textquotesingle{} if receives \textquotesingle{}description\textquotesingle{} as \textquotesingle{}\+\_\+data\textquotesingle{} returns a string with command description.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 630 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+join@{com\+\_\+join}}
+\index{com\+\_\+join@{com\+\_\+join}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+join(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_join(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+join (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a4cf5a269c6af4b838cd5c1ced1676662}{}\label{classlib_1_1server_1_1_server_a4cf5a269c6af4b838cd5c1ced1676662}
+
+
+join a group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 664 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+kick@{com\+\_\+kick}}
+\index{com\+\_\+kick@{com\+\_\+kick}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+kick(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_kick(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+kick (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_ac47e8a01071e003d2c1401a55d055132}{}\label{classlib_1_1server_1_1_server_ac47e8a01071e003d2c1401a55d055132}
+
+
+kick user from group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 715 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+leave@{com\+\_\+leave}}
+\index{com\+\_\+leave@{com\+\_\+leave}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+leave(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_leave(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+leave (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_aca808a3a7ea205cef5c0d556c8b03ecf}{}\label{classlib_1_1server_1_1_server_aca808a3a7ea205cef5c0d556c8b03ecf}
+
+
+leave a group or a chat if user not in a group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 776 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+list@{com\+\_\+list}}
+\index{com\+\_\+list@{com\+\_\+list}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+list(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_list(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+list (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a9fcc590e919c1877295ed150f851b469}{}\label{classlib_1_1server_1_1_server_a9fcc590e919c1877295ed150f851b469}
+
+
+list server groups if user isn\textquotesingle{}t in a group or list users of user group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 831 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+list\+\_\+files@{com\+\_\+list\+\_\+files}}
+\index{com\+\_\+list\+\_\+files@{com\+\_\+list\+\_\+files}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+list\+\_\+files(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_list_files(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+list\+\_\+files (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a17bdb51a017c2a09b95fff98da8d64ad}{}\label{classlib_1_1server_1_1_server_a17bdb51a017c2a09b95fff98da8d64ad}
+
+
+Lists files stored on user group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 875 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+msg@{com\+\_\+msg}}
+\index{com\+\_\+msg@{com\+\_\+msg}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+msg(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_msg(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+msg (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_ae632e88e7a3e8d83bf8a7efdcab61cf2}{}\label{classlib_1_1server_1_1_server_ae632e88e7a3e8d83bf8a7efdcab61cf2}
+
+
+send a private message from one user to another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 912 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!com\+\_\+nick@{com\+\_\+nick}}
+\index{com\+\_\+nick@{com\+\_\+nick}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{com\+\_\+nick(self, \+\_\+data, \+\_\+user, \+\_\+full\+\_\+msg=\lcurly{}\rcurly{})}{com_nick(self, _data, _user, _full_msg=\{\})}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+com\+\_\+nick (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+full\+\_\+msg = {\ttfamily \{\}}}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_aa791030280251ab267ac52f13254147d}{}\label{classlib_1_1server_1_1_server_aa791030280251ab267ac52f13254147d}
+
+
+changes user nickname. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+full\+\_\+msg} & The full message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 964 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!list\+\_\+client@{list\+\_\+client}}
+\index{list\+\_\+client@{list\+\_\+client}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{list\+\_\+client(self, \+\_\+user)}{list_client(self, _user)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+list\+\_\+client (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+user}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a54bcf5eef81698eb45cb3159e19920f5}{}\label{classlib_1_1server_1_1_server_a54bcf5eef81698eb45cb3159e19920f5}
+
+
+When listen method find new user this method is call as a thread, this method manage the communication with users. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+user} & The user\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 103 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!listen@{listen}}
+\index{listen@{listen}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{listen(self)}{listen(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+listen (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a1d5cf3d4cb594c5b45c1153e2519158a}{}\label{classlib_1_1server_1_1_server_a1d5cf3d4cb594c5b45c1153e2519158a}
+
+
+When \hyperlink{app_8py}{app.\+py} intances this class this method is called, this method mantain an infinity loop listen socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 68 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!manage\+\_\+coms@{manage\+\_\+coms}}
+\index{manage\+\_\+coms@{manage\+\_\+coms}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{manage\+\_\+coms(self, \+\_\+data, \+\_\+user)}{manage_coms(self, _data, _user)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+manage\+\_\+coms (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+data, }
+\item[{}]{\+\_\+user}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a9a4f143acb36a5f11b237d6a32e6aac1}{}\label{classlib_1_1server_1_1_server_a9a4f143acb36a5f11b237d6a32e6aac1}
+
+
+works like a switch case for commands in server. 
+
+Verify wich function user want and call right method \textquotesingle{}com\+\_\+$\ast$\textquotesingle{} to manage this.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+data} & The data \\
+\hline
+{\em \+\_\+user} & The user\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{ description\+\_\+of\+\_\+the\+\_\+return\+\_\+value \} 
+\end{DoxyReturn}
+
+
+Definition at line 229 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!msg\+\_\+of\+\_\+day@{msg\+\_\+of\+\_\+day}}
+\index{msg\+\_\+of\+\_\+day@{msg\+\_\+of\+\_\+day}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{msg\+\_\+of\+\_\+day(self, \+\_\+user)}{msg_of_day(self, _user)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+msg\+\_\+of\+\_\+day (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+user}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a01a04db3e7fcf1644df2267b4bce8bf3}{}\label{classlib_1_1server_1_1_server_a01a04db3e7fcf1644df2267b4bce8bf3}
+
+
+Send to user a server random initial message from a text file. 
+
+This call \textquotesingle{}com\+\_\+help\textquotesingle{} method too. \begin{DoxyVerb}    @param      self   The object
+    @param      _user  The user
+
+    @return     void method.\end{DoxyVerb}
+ 
+
+Definition at line 198 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!send\+\_\+to\+\_\+all@{send\+\_\+to\+\_\+all}}
+\index{send\+\_\+to\+\_\+all@{send\+\_\+to\+\_\+all}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{send\+\_\+to\+\_\+all(self, \+\_\+user, \+\_\+msg)}{send_to_all(self, _user, _msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+send\+\_\+to\+\_\+all (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a0b25ac2782ce4491215f954a5d40217d}{}\label{classlib_1_1server_1_1_server_a0b25ac2782ce4491215f954a5d40217d}
+
+
+Sends message to all users in same group as sender. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+msg} & The message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 157 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!server\+\_\+send@{server\+\_\+send}}
+\index{server\+\_\+send@{server\+\_\+send}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{server\+\_\+send(self, \+\_\+user, \+\_\+text)}{server_send(self, _user, _text)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+server.\+Server.\+server\+\_\+send (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+user, }
+\item[{}]{\+\_\+text}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1server_1_1_server_a054e900a412a025b96f82be3dbdceb80}{}\label{classlib_1_1server_1_1_server_a054e900a412a025b96f82be3dbdceb80}
+
+
+Support method to send message as server for one user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+user} & The user \\
+\hline
+{\em \+\_\+text} & The text\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 179 of file server.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!coms\+\_\+list@{coms\+\_\+list}}
+\index{coms\+\_\+list@{coms\+\_\+list}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{coms\+\_\+list}{coms_list}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+coms\+\_\+list}\hypertarget{classlib_1_1server_1_1_server_acc7e85c3c73a1dc49868f0c27a595690}{}\label{classlib_1_1server_1_1_server_acc7e85c3c73a1dc49868f0c27a595690}
+
+
+Definition at line 35 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!groups\+\_\+dict@{groups\+\_\+dict}}
+\index{groups\+\_\+dict@{groups\+\_\+dict}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{groups\+\_\+dict}{groups_dict}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+groups\+\_\+dict}\hypertarget{classlib_1_1server_1_1_server_a067972dc62722e52e8fca4d7860f35c2}{}\label{classlib_1_1server_1_1_server_a067972dc62722e52e8fca4d7860f35c2}
+
+
+Definition at line 53 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!ip\+\_\+addr@{ip\+\_\+addr}}
+\index{ip\+\_\+addr@{ip\+\_\+addr}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{ip\+\_\+addr}{ip_addr}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+ip\+\_\+addr}\hypertarget{classlib_1_1server_1_1_server_a727a355f0e60ea172d2f5a2899fa2f59}{}\label{classlib_1_1server_1_1_server_a727a355f0e60ea172d2f5a2899fa2f59}
+
+
+Definition at line 29 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!last\+\_\+user\+\_\+key@{last\+\_\+user\+\_\+key}}
+\index{last\+\_\+user\+\_\+key@{last\+\_\+user\+\_\+key}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{last\+\_\+user\+\_\+key}{last_user_key}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+last\+\_\+user\+\_\+key}\hypertarget{classlib_1_1server_1_1_server_ac63f8503a25052fe55b00c3293be2bbf}{}\label{classlib_1_1server_1_1_server_ac63f8503a25052fe55b00c3293be2bbf}
+
+
+Definition at line 54 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!msg@{msg}}
+\index{msg@{msg}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{msg}{msg}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+msg}\hypertarget{classlib_1_1server_1_1_server_ab4eb49688a65a6fd7c0e483e235ba78c}{}\label{classlib_1_1server_1_1_server_ab4eb49688a65a6fd7c0e483e235ba78c}
+
+
+Definition at line 55 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!port@{port}}
+\index{port@{port}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{port}{port}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+port}\hypertarget{classlib_1_1server_1_1_server_a2d6cee10cfeca5b851e1f7e9276c9be7}{}\label{classlib_1_1server_1_1_server_a2d6cee10cfeca5b851e1f7e9276c9be7}
+
+
+Definition at line 30 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!sock@{sock}}
+\index{sock@{sock}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{sock}{sock}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+sock}\hypertarget{classlib_1_1server_1_1_server_a9b368c1b53b943b0170ec7ca5d216af0}{}\label{classlib_1_1server_1_1_server_a9b368c1b53b943b0170ec7ca5d216af0}
+
+
+Definition at line 31 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!trds\+\_\+dict@{trds\+\_\+dict}}
+\index{trds\+\_\+dict@{trds\+\_\+dict}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{trds\+\_\+dict}{trds_dict}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+trds\+\_\+dict}\hypertarget{classlib_1_1server_1_1_server_a630c17611509ad5aafc7d6a9390ee225}{}\label{classlib_1_1server_1_1_server_a630c17611509ad5aafc7d6a9390ee225}
+
+
+Definition at line 57 of file server.\+py.
+
+\index{lib\+::server\+::\+Server@{lib\+::server\+::\+Server}!users\+\_\+list@{users\+\_\+list}}
+\index{users\+\_\+list@{users\+\_\+list}!lib\+::server\+::\+Server@{lib\+::server\+::\+Server}}
+\subsubsection[{\texorpdfstring{users\+\_\+list}{users_list}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+server.\+Server.\+users\+\_\+list}\hypertarget{classlib_1_1server_1_1_server_afd8269952d012312cd598da1ede38dce}{}\label{classlib_1_1server_1_1_server_afd8269952d012312cd598da1ede38dce}
+
+
+Definition at line 52 of file server.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\hyperlink{server_8py}{server.\+py}\end{DoxyCompactItemize}

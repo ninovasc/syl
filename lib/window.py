@@ -68,7 +68,7 @@ class Window(object):
             self.header.clear()
             self.header.refresh()
 
-            self.data = self.std.subwin(curses.LINES - 4, curses.COLS - 1, 1, 0)
+            self.data = self.std.subwin(curses.LINES - 2, curses.COLS - 1, 1, 0)
             self.data.scrollok(True)
 
             self.prompt = curses.newwin(0, curses.COLS, curses.LINES - 1, 0)

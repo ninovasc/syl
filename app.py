@@ -17,10 +17,9 @@ def server(_port):
     @return     return one server
     """
     print "Application inicialized as server"
-    try:
-        Server('', _port).listen()
-    except:
-        raise
+
+    Server('', _port).listen()
+
 def client(_ip, _port):
     """
     @brief      Starts app as client

@@ -1,0 +1,43 @@
+\hypertarget{namespacelib_1_1files__db}{}\section{lib.\+files\+\_\+db Namespace Reference}
+\label{namespacelib_1_1files__db}\index{lib.\+files\+\_\+db@{lib.\+files\+\_\+db}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classlib_1_1files__db_1_1_files___d_b}{Files\+\_\+\+DB}
+\begin{DoxyCompactList}\small\item\em Class for files db. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacelib_1_1files__db_af475cfff4eca7442d624eb2026b3657a}{dict\+\_\+factory} (cursor, row)
+\begin{DoxyCompactList}\small\item\em Create a fatory to convert result of a query in a dictionary. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{lib\+::files\+\_\+db@{lib\+::files\+\_\+db}!dict\+\_\+factory@{dict\+\_\+factory}}
+\index{dict\+\_\+factory@{dict\+\_\+factory}!lib\+::files\+\_\+db@{lib\+::files\+\_\+db}}
+\subsubsection[{\texorpdfstring{dict\+\_\+factory(cursor, row)}{dict_factory(cursor, row)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+files\+\_\+db.\+dict\+\_\+factory (
+\begin{DoxyParamCaption}
+\item[{}]{cursor, }
+\item[{}]{row}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacelib_1_1files__db_af475cfff4eca7442d624eb2026b3657a}{}\label{namespacelib_1_1files__db_af475cfff4eca7442d624eb2026b3657a}
+
+
+Create a fatory to convert result of a query in a dictionary. 
+
+This is used in \textquotesingle{}file\+\_\+names\+\_\+by\+\_\+group\textquotesingle{}, using row\+\_\+factory attribute from a connection of sqlite3
+
+
+\begin{DoxyParams}{Parameters}
+{\em cursor} & The cursor \\
+\hline
+{\em row} & The row\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return a dictionary from a query. 
+\end{DoxyReturn}
+
+
+Definition at line 160 of file files\+\_\+db.\+py.
+

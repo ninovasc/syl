@@ -115,6 +115,30 @@ class Files_DB(object):
             print "Unexpected error:", sys.exc_info()[0]
             return False
 
+    def delete_files_by_group(self, _group, _db_name="server"):
+        """
+        @brief      delete files stored in a group
+
+        @param      self      The object
+        @param      _group    The group
+        @param      _db_name  The database name
+
+        @return     Return True if files was deleted
+        """
+        try:
+            conn = sqlite3.connect(_db_name + ".sqlite")
+            cur = conn.cursor()
+            sql = '''DELETE FROM files
+                WHERE GROUPS = :group;'''
+            param = {"group" : _group}
+            cur.execute(sql, param)
+            conn.close()
+            return True
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            return False
+
+
 def dict_factory(cursor, row):
     """
     @brief      Create a fatory to convert result of a query in a dictionary.

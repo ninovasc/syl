@@ -43,58 +43,59 @@ class Client(object):
         @return     void method.
         """
 
-        try:
-            while True:
-                ans = self.msg.receive(self.sock)
-                if ans:
+        # try:
+        while True:
+            ans = self.msg.receive(self.sock)
+            if ans:
 
-                    if "group" in ans:
-                        if ans["group"] == "":
-                            self.window.clear_header()
-                            self.window.addstr_header("Connected on host: "+ \
-                            self.ip_addr +":"+ self.port + \
-                            " U're not in a group")
-                        else:
-                            self.window.clear_header()
-                            self.window.addstr_header("Connected on host: "+ \
-                            self.ip_addr +":"+ self.port + \
-                            " Group: " + ans["group"])
-
-                    if "type" in ans:
-                        if ans["type"] == "clear":
-                            self.window.clear_data()
-                        if ans["type"] == "file":
-                            file_time = strftime("%Y%m%d%H%M%S", gmtime())
-                            bin_file = base64.b64decode(ans["file"])
-                            new_file = open(file_time + ans["file_name"], "wb")
-                            new_file.write(bin_file)
-                            new_file.close()
-                            ans["text"] = "file saved on: " + sys.path[0] + "/" + \
-                            file_time + ans["file_name"]
-
-
-                        if ans["type"] == "quit":
-
-                            break
-
-                    if ans["from"] == "@server":
-                        self.window.addstr_data("*** " + ans["text"]+"\n",
-                                                "server")
-                    elif ans["type"] == "private":
-                        self.window.addstr_data("(" + ans["from"] + \
-                        ") > " + ans["to"] + " " + ans["text"]+"\n", "private")
+                if "group" in ans:
+                    if ans["group"] == "":
+                        self.window.clear_header()
+                        self.window.addstr_header("Connected on host: "+ \
+                        self.ip_addr +":"+ self.port + \
+                        " U're not in a group")
                     else:
-                        self.window.addstr_data(ans["from"] + " > " + \
-                        ans["text"]+"\n", "text")
+                        group = ans["group"]
+                        if len(group) > 15:
+                            group = group[:15] + "..."
+                        self.window.clear_header()
+                        self.window.addstr_header("Connected on host: "+ \
+                        self.ip_addr +":"+ self.port + \
+                        " Group: " + group)
 
-        finally:
-            self.window.addstr_data("*** " + ans["text"]+"\n",
-                                    "server")
+                if "type" in ans:
+                    if ans["type"] == "clear":
+                        self.window.clear_data()
+                    if ans["type"] == "file":
+                        file_time = strftime("%Y%m%d%H%M%S", gmtime())
+                        bin_file = base64.b64decode(ans["file"])
+                        new_file = open(file_time + ans["file_name"], "wb")
+                        new_file.write(bin_file)
+                        new_file.close()
+                        ans["text"] = "file saved on: " + sys.path[0] + \
+                        "/" + file_time + ans["file_name"]
+                    if ans["type"] == "quit":
+                        break
 
 
-            self.window.close()
-            self.thread_send.join()
-            end_client(self)
+                if ans["from"] == "@server":
+                    self.window.addstr_data("*** " + ans["text"]+"\n",
+                                            "server")
+                elif ans["type"] == "private":
+                    self.window.addstr_data("(" + ans["from"] + \
+                    ") > " + ans["to"] + " " + ans["text"]+"\n", "private")
+                else:
+                    self.window.addstr_data(ans["from"] + " > " + \
+                    ans["text"]+"\n", "text")
+
+        # finally:
+        #     self.window.addstr_data("*** " + ans["text"]+"\n",
+        #                             "server")
+
+
+        #     self.window.close()
+        #     self.thread_send.join()
+        #     end_client(self)
 
 
     def send_server(self):
@@ -133,7 +134,7 @@ class Client(object):
                             self.msg.send(self.sock, msg)
                         except:
                             self.window.addstr_data("ERROR: can't load " + \
-                            "file. Please verify.", "error")
+                            "file. Please verify.\n", "error")
                     else:
                         msg = {
                             "text" : send,

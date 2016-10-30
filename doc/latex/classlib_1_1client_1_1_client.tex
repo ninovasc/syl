@@ -1,0 +1,166 @@
+\hypertarget{classlib_1_1client_1_1_client}{}\section{lib.\+client.\+Client Class Reference}
+\label{classlib_1_1client_1_1_client}\index{lib.\+client.\+Client@{lib.\+client.\+Client}}
+
+
+Class for client application mode.  
+
+
+
+
+Inherits \hyperlink{classobject}{object}.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classlib_1_1client_1_1_client_a942b92a076c34955c94d1571c574f00d}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, \+\_\+ip\+\_\+addr, \+\_\+port)
+\item 
+def \hyperlink{classlib_1_1client_1_1_client_ae7cf3bdafab9eec4a5a21e7bd234c17b}{listen\+\_\+server} (self)
+\begin{DoxyCompactList}\small\item\em method started as thread to read/listen server. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1client_1_1_client_a1100c4e3f2e08d6c48ab4f375b079aa4}{send\+\_\+server} (self)
+\begin{DoxyCompactList}\small\item\em method started as thread to send data to server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_a14e1fa287605a688760e57f2a0232d2a}{ip\+\_\+addr}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_a35b672da8f23ae7aeadc3e03e99f9edd}{port}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_a79510d74a099f685a18c07b4e22116fa}{sock}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_ab61a588e77b65d111685863ed9be01d9}{window}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_a60b77e8b0ae291e08817017df40a90cf}{msg}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_a3464ac167fca93dadccabb3ac5784445}{thread\+\_\+listen}
+\item 
+\hyperlink{classlib_1_1client_1_1_client_ad877f8666b5123a6b388e32dfde1e35a}{thread\+\_\+send}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for client application mode. 
+
+Definition at line 21 of file client.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, \+\_\+ip\+\_\+addr, \+\_\+port)}{__init__(self, _ip_addr, _port)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+client.\+Client.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+ip\+\_\+addr, }
+\item[{}]{\+\_\+port}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1client_1_1_client_a942b92a076c34955c94d1571c574f00d}{}\label{classlib_1_1client_1_1_client_a942b92a076c34955c94d1571c574f00d}
+
+
+Definition at line 23 of file client.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!listen\+\_\+server@{listen\+\_\+server}}
+\index{listen\+\_\+server@{listen\+\_\+server}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{listen\+\_\+server(self)}{listen_server(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+client.\+Client.\+listen\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1client_1_1_client_ae7cf3bdafab9eec4a5a21e7bd234c17b}{}\label{classlib_1_1client_1_1_client_ae7cf3bdafab9eec4a5a21e7bd234c17b}
+
+
+method started as thread to read/listen server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 47 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!send\+\_\+server@{send\+\_\+server}}
+\index{send\+\_\+server@{send\+\_\+server}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{send\+\_\+server(self)}{send_server(self)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+client.\+Client.\+send\+\_\+server (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1client_1_1_client_a1100c4e3f2e08d6c48ab4f375b079aa4}{}\label{classlib_1_1client_1_1_client_a1100c4e3f2e08d6c48ab4f375b079aa4}
+
+
+method started as thread to send data to server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method. 
+\end{DoxyReturn}
+
+
+Definition at line 112 of file client.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!ip\+\_\+addr@{ip\+\_\+addr}}
+\index{ip\+\_\+addr@{ip\+\_\+addr}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{ip\+\_\+addr}{ip_addr}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+ip\+\_\+addr}\hypertarget{classlib_1_1client_1_1_client_a14e1fa287605a688760e57f2a0232d2a}{}\label{classlib_1_1client_1_1_client_a14e1fa287605a688760e57f2a0232d2a}
+
+
+Definition at line 25 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!msg@{msg}}
+\index{msg@{msg}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{msg}{msg}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+msg}\hypertarget{classlib_1_1client_1_1_client_a60b77e8b0ae291e08817017df40a90cf}{}\label{classlib_1_1client_1_1_client_a60b77e8b0ae291e08817017df40a90cf}
+
+
+Definition at line 32 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!port@{port}}
+\index{port@{port}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{port}{port}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+port}\hypertarget{classlib_1_1client_1_1_client_a35b672da8f23ae7aeadc3e03e99f9edd}{}\label{classlib_1_1client_1_1_client_a35b672da8f23ae7aeadc3e03e99f9edd}
+
+
+Definition at line 26 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!sock@{sock}}
+\index{sock@{sock}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{sock}{sock}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+sock}\hypertarget{classlib_1_1client_1_1_client_a79510d74a099f685a18c07b4e22116fa}{}\label{classlib_1_1client_1_1_client_a79510d74a099f685a18c07b4e22116fa}
+
+
+Definition at line 27 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!thread\+\_\+listen@{thread\+\_\+listen}}
+\index{thread\+\_\+listen@{thread\+\_\+listen}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{thread\+\_\+listen}{thread_listen}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+thread\+\_\+listen}\hypertarget{classlib_1_1client_1_1_client_a3464ac167fca93dadccabb3ac5784445}{}\label{classlib_1_1client_1_1_client_a3464ac167fca93dadccabb3ac5784445}
+
+
+Definition at line 33 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!thread\+\_\+send@{thread\+\_\+send}}
+\index{thread\+\_\+send@{thread\+\_\+send}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{thread\+\_\+send}{thread_send}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+thread\+\_\+send}\hypertarget{classlib_1_1client_1_1_client_ad877f8666b5123a6b388e32dfde1e35a}{}\label{classlib_1_1client_1_1_client_ad877f8666b5123a6b388e32dfde1e35a}
+
+
+Definition at line 34 of file client.\+py.
+
+\index{lib\+::client\+::\+Client@{lib\+::client\+::\+Client}!window@{window}}
+\index{window@{window}!lib\+::client\+::\+Client@{lib\+::client\+::\+Client}}
+\subsubsection[{\texorpdfstring{window}{window}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+client.\+Client.\+window}\hypertarget{classlib_1_1client_1_1_client_ab61a588e77b65d111685863ed9be01d9}{}\label{classlib_1_1client_1_1_client_ab61a588e77b65d111685863ed9be01d9}
+
+
+Definition at line 29 of file client.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\hyperlink{client_8py}{client.\+py}\end{DoxyCompactItemize}

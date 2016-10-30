@@ -28,7 +28,7 @@ class Server(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.ip_addr, self.port))
-        Files_DB().create("server")
+        Files_DB().create(str(self.port))
         self.coms_list = {
             '/away': "com_away",
             '/ban': "com_ban",
@@ -122,14 +122,22 @@ class Server(object):
                                 "from" : _user.nick,
                                 "to" : "@all",
                             }
-                            setattr(_user, 'away', False)
+                            if user.away:
+                                setattr(_user, 'away', False)
+                                not_away = {
+                                    "text" : user.nick + " is not away " + \
+                                    "anymore.",
+                                    "type" : "server",
+                                    "from" : "@server",
+                                    "to" : "@all",
+                                }
+                                self.send_to_all(_user, not_away)
                             self.send_to_all(_user, msg)
         except:
             #pass
             print "error on user: " + _user.nick + ", user removed " + \
             "from server."
             self.users_list.remove(_user)
-            break
 
     def send_to_all(self, _user, _msg):
         """
@@ -180,19 +188,22 @@ class Server(object):
 
         @return     void method.
         """
-        text = "Today is a very good day to "
+        text = "syl - version 1.0\n"
+        text += "Today is a very good day to "
         motd = open("lib/motd.txt", 'r')
         lines = motd.readlines()
         motd.close()
-
+        rnd = lines[int(random.uniform(0, len(lines)))].replace('\n', '')
         msg = {
             "group": "",
-            "text" : text + lines[int(random.uniform(0, len(lines)))],
+            "text" : text + rnd,
             "type" : "server",
             "from" : "@server",
             "to" : _user.nick
         }
-        self.msg.send(_user.client,msg)
+
+        self.msg.send(_user.client, msg)
+        #self.server_send(_user, "send '/help' to see a list of commands.")
         self.com_help("", _user)
 
     def manage_coms(self, _data, _user):
@@ -246,34 +257,40 @@ class Server(object):
             return "/away : set your status to afk and not receive "+ \
             "private mensages."
 
-        if _user.away:
+        try:
+            if _user.away:
+                msg = {
+                    "text" : "You already away. Send a mensage to return.",
+                    "type" : "server",
+                    "from" : "@server",
+                    "to" : _user.nick
+                }
+                self.msg.send(_user.client, msg)
+                return
+
+            if _user.group == "":
+                msg = {
+                    "text" : "You must be in a group to be away.",
+                    "type" : "server",
+                    "from" : "@server",
+                    "to" : _user.nick
+                }
+                self.msg.send(_user.client, msg)
+                return
+
+            setattr(_user, 'away', True)
             msg = {
-                "text" : "You already away. Send a mensage to return.",
+                "text" : "User " + _user.nick + " is now away from keyboard.",
                 "type" : "server",
                 "from" : "@server",
                 "to" : _user.nick
             }
-            self.msg.send(_user.client, msg)
-            return
+            self.send_to_all(_user, msg)
+        except:
 
-        if _user.group == "":
-            msg = {
-                "text" : "You must be in a group to bem away.",
-                "type" : "server",
-                "from" : "@server",
-                "to" : _user.nick
-            }
-            self.msg.send(_user.client, msg)
-            return
-
-        setattr(_user, 'away', True)
-        msg = {
-            "text" : "User " + _user.nick + " is now away from keyboard.",
-            "type" : "server",
-            "from" : "@server",
-            "to" : _user.nick
-        }
-        self.send_to_all(_user, msg)
+            print "Unexpected error on /away:", sys.exc_info()[0]
+            self.server_send(_user, "Error on /away. Try again. If you " + \
+            "need: /help")
 
     def com_ban(self, _data, _user, _full_msg={}):
         """
@@ -289,7 +306,9 @@ class Server(object):
         if _data == "description":
             return "/ban <nick> : Banish user from group. Only for " + \
             "group admin."
+
         try:
+
             if _user.group == "":
                 self.server_send(_user, "You must in a group and be "+ \
                 "admin of group to banish anyone.")
@@ -413,6 +432,7 @@ class Server(object):
                     "to" : _user.nick,
                 }
                 self.msg.send(_user.client, msg)
+                return
 
             self.groups_dict[new_group_name] = {"admin": _user}
 
@@ -423,8 +443,8 @@ class Server(object):
                 "to" : _user.nick,
             }
             self.msg.send(_user.client, msg)
-            join = {"text" : "/join " + new_group_name}
-            self.manage_coms(join, _user)
+            #join = {"text" : "/join " + new_group_name}
+            #self.manage_coms(join, _user)
 
         except:
 
@@ -450,6 +470,12 @@ class Server(object):
         try:
 
             group_to_delete = _data[1]
+
+            if group_to_delete not in self.groups_dict:
+                self.server_send(_user, "Group "+  group_to_delete + \
+                    " dont exist in this server.")
+                return
+
             if _user.key != self.groups_dict[group_to_delete]["admin"].key:
                 self.server_send(_user, "You must be admin of "+ \
                 group_to_delete + " to delete the group.")
@@ -463,7 +489,10 @@ class Server(object):
                 return
 
             del self.groups_dict[group_to_delete]
-
+            Files_DB().delete_files_by_group(
+                group_to_delete,
+                str(self.port)
+            )
             self.server_send(_user, group_to_delete + " was deleted")
 
         except:
@@ -484,19 +513,30 @@ class Server(object):
         @return     void method.
         """
         if _data == "description":
-            return "/file <path to file> - Send a file to group"
+            return "/file <path to file> : Send a file to group"
 
         try:
 
             if _user.group == "":
                 self.server_send(_user, "You need to be in a group to " + \
-                "send files")
+                "send files.")
+                return
+
+            file_names = Files_DB().file_names_by_group(
+                _user.group,
+                str(self.port))
+
+            if any(d['FILE_NAME'] == _full_msg["file_name"]
+                   for d in file_names):
+                self.server_send(_user, "File: " + _full_msg["file_name"] + \
+                " already exist in this group.")
                 return
 
             Files_DB().insert_file(
                 _user.group,
                 _full_msg["file_name"],
-                _full_msg["file"] #base64.b64decode(_full_msg["file"])
+                _full_msg["file"],
+                str(self.port)
             )
             msg = {
                 "text" : _user.nick + " has send a file! File name is: " + \
@@ -525,7 +565,7 @@ class Server(object):
         @return     void method.
         """
         if _data == "description":
-            return "/get_file <file name> - get a file of group"
+            return "/get_file <file name> : get a file of group"
 
         try:
 
@@ -534,7 +574,11 @@ class Server(object):
                 return
             file_name = _data[1]
 
-            b64file = Files_DB().file_by_name_group(file_name, _user.group)
+            b64file = Files_DB().file_by_name_group(
+                file_name,
+                _user.group,
+                str(self.port)
+            )
 
             if not b64file:
                 self.server_send(_user, "Fail to get file, check file name.")
@@ -567,16 +611,20 @@ class Server(object):
         @return     void method.
         """
         if _data == "description":
-            return "/help - Show a list with commands"
+            return "/help : Show a list with commands"
 
         try:
 
             ans = "List of commands:\n"
-            for _, method in self.coms_list.items():
-                method_call = getattr(self, method, lambda: "com_error")
+            for key in sorted(self.coms_list):
+                method_call = getattr(
+                    self,
+                    self.coms_list[key],
+                    lambda: "com_error"
+                )
                 ans += method_call("description", _user, "") + "\n"
 
-            self.server_send(_user, "\n" + ans)
+            self.server_send(_user, ans)
 
         except:
 
@@ -676,7 +724,7 @@ class Server(object):
 
             msg = {
                 "text" : _user.nick + " has kicked " + user_to_kick.nick + \
-                "from group " + _user.group,
+                " from group " + _user.group,
                 "type" : "server",
                 "from" : "@server",
                 "to" : "@all"
@@ -802,17 +850,21 @@ class Server(object):
 
         @return     void method.
         """
+
+        if _data == "description":
+            return "/list_files : List files in the group"
+
         try:
-            if _data == "description":
-                return "/list_files - List files in the group"
 
             if _user.group == "":
                 self.server_send(_user, "You must be in a group to list files")
                 return
 
             text = "List of files in " + _user.group + ":\n"
-            file_names = Files_DB().file_names_by_group(_user.group)
-            print file_names
+            file_names = Files_DB().file_names_by_group(
+                _user.group,
+                str(self.port))
+            #print file_names
 
             for _, file_name in enumerate(d['FILE_NAME'] for d in file_names):
                 text += file_name + "\n"
@@ -835,8 +887,8 @@ class Server(object):
         @return     void method.
         """
         if _data == "description":
-            return "/msg <nick> <mensage> - Send a private mensage to an " + \
-            "specific user in same group"
+            return "/msg <nick> <mensage> : Send a private mensage to an " + \
+            "user in same group"
 
         try:
 

@@ -1,0 +1,223 @@
+\hypertarget{classlib_1_1msg_1_1_msg}{}\section{lib.\+msg.\+Msg Class Reference}
+\label{classlib_1_1msg_1_1_msg}\index{lib.\+msg.\+Msg@{lib.\+msg.\+Msg}}
+
+
+Class for transit of messages.  
+
+
+
+
+Inherits \hyperlink{classobject}{object}.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classlib_1_1msg_1_1_msg_a940ef0ccfa2f4a4af1fa33860cb1c6fa}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, \+\_\+type, \+\_\+log)
+\begin{DoxyCompactList}\small\item\em Constructs the object. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1msg_1_1_msg_a4b749e97fce265348bc7e57b8d2aaa68}{create} (self, \+\_\+type, \+\_\+from, \+\_\+to, \+\_\+group, \+\_\+text, \+\_\+file)
+\begin{DoxyCompactList}\small\item\em Un used method, can be used to create message with time attribute. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1msg_1_1_msg_a5460a048522d65966fb8def589c1edc9}{send} (self, \+\_\+client, \+\_\+msg)
+\begin{DoxyCompactList}\small\item\em This method receives a message and a socket. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1msg_1_1_msg_a8bf1ba01d1b81ccfa2331f3888507974}{receive} (self, \+\_\+client)
+\begin{DoxyCompactList}\small\item\em This method receives a socket. \end{DoxyCompactList}\item 
+def \hyperlink{classlib_1_1msg_1_1_msg_addaf9d525e67a6ccbc9043232b8918ba}{receive\+\_\+all} (self, \+\_\+client, \+\_\+size)
+\begin{DoxyCompactList}\small\item\em Support method for \textquotesingle{}receive\textquotesingle{} method, works receiving from socket a message by size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlib_1_1msg_1_1_msg_a6e45a46787a73c3fefd6e40eaa3493cf}{log}
+\item 
+\hyperlink{classlib_1_1msg_1_1_msg_abbc06ca8ca4607bac414f431d5a67c4c}{data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for transit of messages. 
+
+This class structs each message in packs and make log call. 
+
+Definition at line 17 of file msg.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+(self, \+\_\+type, \+\_\+log)}{__init__(self, _type, _log)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+msg.\+Msg.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+type, }
+\item[{}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1msg_1_1_msg_a940ef0ccfa2f4a4af1fa33860cb1c6fa}{}\label{classlib_1_1msg_1_1_msg_a940ef0ccfa2f4a4af1fa33860cb1c6fa}
+
+
+Constructs the object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+type} & The type \\
+\hline
+{\em \+\_\+log} & The log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 27 of file msg.\+py.
+
+
+
+\subsection{Member Function Documentation}
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!create@{create}}
+\index{create@{create}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{create(self, \+\_\+type, \+\_\+from, \+\_\+to, \+\_\+group, \+\_\+text, \+\_\+file)}{create(self, _type, _from, _to, _group, _text, _file)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+msg.\+Msg.\+create (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+type, }
+\item[{}]{\+\_\+from, }
+\item[{}]{\+\_\+to, }
+\item[{}]{\+\_\+group, }
+\item[{}]{\+\_\+text, }
+\item[{}]{\+\_\+file}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1msg_1_1_msg_a4b749e97fce265348bc7e57b8d2aaa68}{}\label{classlib_1_1msg_1_1_msg_a4b749e97fce265348bc7e57b8d2aaa68}
+
+
+Un used method, can be used to create message with time attribute. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+type} & The type \\
+\hline
+{\em \+\_\+from} & The from \\
+\hline
+{\em \+\_\+to} & The to (message receiver) \\
+\hline
+{\em \+\_\+group} & The group \\
+\hline
+{\em \+\_\+text} & The text \\
+\hline
+{\em \+\_\+file} & The file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+changes self.\+data dictionary of class. 
+\end{DoxyReturn}
+
+
+Definition at line 49 of file msg.\+py.
+
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!receive@{receive}}
+\index{receive@{receive}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{receive(self, \+\_\+client)}{receive(self, _client)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+msg.\+Msg.\+receive (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+client}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1msg_1_1_msg_a8bf1ba01d1b81ccfa2331f3888507974}{}\label{classlib_1_1msg_1_1_msg_a8bf1ba01d1b81ccfa2331f3888507974}
+
+
+This method receives a socket. 
+
+Read 4 first bytes with size of message. After that receive the real message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+client} & The client (socket)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return a dictionary with message attributes 
+\end{DoxyReturn}
+
+
+Definition at line 97 of file msg.\+py.
+
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!receive\+\_\+all@{receive\+\_\+all}}
+\index{receive\+\_\+all@{receive\+\_\+all}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{receive\+\_\+all(self, \+\_\+client, \+\_\+size)}{receive_all(self, _client, _size)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+msg.\+Msg.\+receive\+\_\+all (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+client, }
+\item[{}]{\+\_\+size}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1msg_1_1_msg_addaf9d525e67a6ccbc9043232b8918ba}{}\label{classlib_1_1msg_1_1_msg_addaf9d525e67a6ccbc9043232b8918ba}
+
+
+Support method for \textquotesingle{}receive\textquotesingle{} method, works receiving from socket a message by size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+client} & The client (socket) \\
+\hline
+{\em \+\_\+size} & The size\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return received data. 
+\end{DoxyReturn}
+
+
+Definition at line 123 of file msg.\+py.
+
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!send@{send}}
+\index{send@{send}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{send(self, \+\_\+client, \+\_\+msg)}{send(self, _client, _msg)}}]{\setlength{\rightskip}{0pt plus 5cm}def lib.\+msg.\+Msg.\+send (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{\+\_\+client, }
+\item[{}]{\+\_\+msg}
+\end{DoxyParamCaption}
+)}\hypertarget{classlib_1_1msg_1_1_msg_a5460a048522d65966fb8def589c1edc9}{}\label{classlib_1_1msg_1_1_msg_a5460a048522d65966fb8def589c1edc9}
+
+
+This method receives a message and a socket. 
+
+Structs this message with a 4 bytes in benning, this bytes contains the size of message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The object \\
+\hline
+{\em \+\_\+client} & The client (socket) \\
+\hline
+{\em \+\_\+msg} & The message\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void method, only sends a message. 
+\end{DoxyReturn}
+
+
+Definition at line 74 of file msg.\+py.
+
+
+
+\subsection{Member Data Documentation}
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!data@{data}}
+\index{data@{data}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{data}{data}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+msg.\+Msg.\+data}\hypertarget{classlib_1_1msg_1_1_msg_abbc06ca8ca4607bac414f431d5a67c4c}{}\label{classlib_1_1msg_1_1_msg_abbc06ca8ca4607bac414f431d5a67c4c}
+
+
+Definition at line 32 of file msg.\+py.
+
+\index{lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}!log@{log}}
+\index{log@{log}!lib\+::msg\+::\+Msg@{lib\+::msg\+::\+Msg}}
+\subsubsection[{\texorpdfstring{log}{log}}]{\setlength{\rightskip}{0pt plus 5cm}lib.\+msg.\+Msg.\+log}\hypertarget{classlib_1_1msg_1_1_msg_a6e45a46787a73c3fefd6e40eaa3493cf}{}\label{classlib_1_1msg_1_1_msg_a6e45a46787a73c3fefd6e40eaa3493cf}
+
+
+Definition at line 29 of file msg.\+py.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\hyperlink{msg_8py}{msg.\+py}\end{DoxyCompactItemize}

@@ -115,7 +115,7 @@ class Msg(object):
         @return     return received data.
         """
         data = ''
-        while len(data) < size:
+        while len(data) < _size:
             pack = _client.recv(_size - len(data))
             if not pack:
                 return None
