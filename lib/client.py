@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Módulo de Cliente"""
+"""
+This module is started by app.py when application is called as client.
+"""
 import threading
 import socket
 import atexit
 import base64
 import ntpath
 import sys
-import os
 from time import gmtime, strftime
 from lib.msg import Msg
 from lib.window import Window
 
 
 class Client(object):
+    """
+    @brief      Class for client application mode.
+    """
 
     def __init__(self, _ip_addr, _port):
 
@@ -31,6 +35,13 @@ class Client(object):
 
 
     def listen_server(self):
+        """
+        @brief      method started as thread to read/listen server.
+
+        @param      self  The object
+
+        @return     void method.
+        """
 
         try:
             while True:
@@ -87,7 +98,13 @@ class Client(object):
 
 
     def send_server(self):
+        """
+        @brief      method started as thread to send data to server.
 
+        @param      self  The object
+
+        @return     void method.
+        """
         try:
             while True:
                 self.window.tex.edit()
@@ -132,6 +149,13 @@ class Client(object):
             #self.sock.close()
 
 def end_client(_client):
+    """
+    @brief      Ends a client. Method isn't used.
+
+    @param      _client  The client
+
+    @return     void method.
+    """
     _client.window.close()
     _client = None
     print "Client is now closed. See you later!"

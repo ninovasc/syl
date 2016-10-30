@@ -1,22 +1,36 @@
 # -*- coding: utf-8 -*-
-"""modulo para o curses"""
+"""
+Control terminal window in client using Curses
+"""
 import curses
 from curses.textpad import Textbox, rectangle
 import traceback
 
 
 class Window(object):
-    """Classe de parametrizacao e inicializacao do curses"""
+    """
+    @brief      Class for window control using Curses.
+    """
     def __init__(self):
+        """
+        @brief      Constructs the object.
+
+        @param      self   The object
+        """
         curses.wrapper(self.start)
 
     def start(self,std):
+        """
+        @brief      Start all Curses windows: a standard window, a header
+                    window, a data window and a input window.
+
+        @param      self  The object
+        @param      std   The standard window
+
+        @return     Only create windows to client.
+        """
         try:
             self.std=std
-            #self.std = curses.initscr()
-
-            #curses.start_color()
-            #curses.use_default_colors()
 
             gray = curses.COLOR_WHITE + 1
             curses.init_color(gray, 200, 200, 200)
@@ -49,10 +63,6 @@ class Window(object):
             self.std.clear()
             self.std.refresh()
 
-            #curses.noecho()
-            #curses.cbreak()
-            #self.std.keypad(1)
-
             self.header = self.std.subwin(1, curses.COLS, 0, 0)
             self.header.bkgdset(ord(' '), self.header_color)
             self.header.clear()
@@ -73,11 +83,6 @@ class Window(object):
             #rectangle(self.input_retangle, curses.LINES - 3, 0, curses.LINES - 1, curses.COLS - 2)
             self.tex = Textbox(self.prompt)
 
-            #self.std.keypad(0)
-            #curses.echo()
-            #curses.nocbreak()
-            #curses.endwin()
-
         except:
 
             self.std.keypad(0)
@@ -87,18 +92,42 @@ class Window(object):
             traceback.print_exc()
 
     def close(self):
-        """Metodo para finalizar o curses"""
+        """
+        @brief      { function_description }
+
+        @param      self  The object
+
+        @return     { description_of_the_return_value }
+        """
+
         #self.std.keypad(0)
         #curses.echo()
         #curses.nocbreak()
         curses.endwin()
 
-
     def addstr_header(self, _str):
+        """
+        @brief      Add text to header window.
+
+        @param      self  The object
+        @param      _str  The string
+
+        @return     void method.
+        """
         self.header.addstr(_str, self.header_color)
         self.header.refresh()
 
     def addstr_data(self, _str, _type):
+        """
+        @brief      Add text to data window, depending of type, the color is
+                    different.
+
+        @param      self   The object
+        @param      _str   The string
+        @param      _type  The type
+
+        @return     void method.
+        """
         if _type == "server":
             self.data.addstr(_str, self.server_color)
         elif _type == "private":
@@ -110,10 +139,24 @@ class Window(object):
         self.data.refresh()
 
     def clear_header(self):
+        """
+        @brief      Clear header window.
+
+        @param      self  The object
+
+        @return     void method.
+        """
         self.header.clear()
         self.data.refresh()
 
     def clear_data(self):
+        """
+        @brief      clear data window.
+
+        @param      self  The object
+
+        @return     void method.
+        """
         self.data.clear()
         self.data.refresh()
 

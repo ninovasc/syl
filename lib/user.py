@@ -4,7 +4,7 @@ Create to organize users information and apart this from server module.
 """
 class User(object):
     """
-    Classe to store information of server users
+    @brief      Classe to store information of server users
     """
 
     def __init__(self, _key, _client, _addr, _nick, _group):
