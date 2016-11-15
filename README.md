@@ -88,7 +88,62 @@ Only an objetc structure to server manage user attributes.
 
 ## syl application in use
 
+Message of the day:
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/motd.png?raw=true)
+
 Commands:
 
+* /away
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/away.png?raw=true)
+
+* /ban <nick>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/ban.png?raw=true)
+
+* /create <new group>
+
+[![syl](https://github.com/ninovasc/syl/blob/master/readme_img/create.png?raw=true)
+
+* /create <group>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/delete.png?raw=true)
+
+* /file <path to file>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/file.png?raw=true)
+
+ * /get_file <file>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/get_file.png?raw=true)
+
+ * /join <group>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/join.png?raw=true)
+
+ * /kick <nick>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/kick.png?raw=true)
+
+ * /leave
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/leave.png?raw=true)
+
+ * /list_files
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_files.png?raw=true)
+
+ * /list
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_groups.png?raw=true)
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_user.png?raw=true)
+
+ * /msg <nick> <text>
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/msg.png?raw=true)
+
 * /nick <new nick>
- [![syl](https://github.com/ninovasc/syl/blob/master/readme_img/nick.png?raw=true)](https://github.com/ninovasc/syl/)
+
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/nick.png?raw=true)
