@@ -98,31 +98,31 @@ Commands:
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/away.png?raw=true)
 
-* /ban <nick>
+* /ban &lt;nick&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/ban.png?raw=true)
 
-* /create <new group>
+* /create &lt;new group&gt;
 
-[![syl](https://github.com/ninovasc/syl/blob/master/readme_img/create.png?raw=true)
+ ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/create.png?raw=true)
 
-* /create <group>
+* /delete &lt;group&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/delete.png?raw=true)
 
-* /file <path to file>
+* /file &lt;path to file&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/file.png?raw=true)
 
- * /get_file <file>
+ * /get_file &lt;file&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/get_file.png?raw=true)
 
- * /join <group>
+ * /join &lt;group&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/join.png?raw=true)
 
- * /kick <nick>
+ * /kick &lt;nick&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/kick.png?raw=true)
 
@@ -140,10 +140,10 @@ Commands:
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_user.png?raw=true)
 
- * /msg <nick> <text>
+ * /msg &lt;nick&gt; &lt;text&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/msg.png?raw=true)
 
-* /nick <new nick>
+* /nick &lt;new nick&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/nick.png?raw=true)
