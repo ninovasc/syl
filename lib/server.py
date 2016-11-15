@@ -96,10 +96,10 @@ class Server(object):
 
         @return     void method.
         """
-        try:
-            self.msg_of_day(_user)
-            while True:
-                # try:
+        #try:
+        self.msg_of_day(_user)
+        while _user in self.users_list:
+            try:
                 data = self.msg.receive(_user.client)
                 if data:
                     if data["text"][:1] == '/':
@@ -122,10 +122,10 @@ class Server(object):
                                 "from" : _user.nick,
                                 "to" : "@all",
                             }
-                            if user.away:
+                            if _user.away:
                                 setattr(_user, 'away', False)
                                 not_away = {
-                                    "text" : user.nick + " is not away " + \
+                                    "text" : _user.nick + " is not away " + \
                                     "anymore.",
                                     "type" : "server",
                                     "from" : "@server",
@@ -133,11 +133,11 @@ class Server(object):
                                 }
                                 self.send_to_all(_user, not_away)
                             self.send_to_all(_user, msg)
-        except:
-            #pass
-            print "error on user: " + _user.nick + ", user removed " + \
-            "from server."
-            self.users_list.remove(_user)
+            except:
+                #pass
+                print "error on user: " + _user.nick + ", user removed " + \
+                "from server."
+                self.users_list.remove(_user)
 
     def send_to_all(self, _user, _msg):
         """
@@ -731,7 +731,7 @@ class Server(object):
             }
             self.send_to_all(_user, msg)
             self.server_send(user_to_kick, "You has been kicked from " + \
-            "group" + _user.group)
+            "group " + _user.group)
             leave = {"text": "/leave"}
             self.manage_coms(leave, user_to_kick)
             return
@@ -757,43 +757,43 @@ class Server(object):
             return "/leave <group name> : leave a chat group or quit chat " + \
             "when not in a group"
 
-        try:
+        #try:
 
-            if _user.group == "":
+        if _user.group == "":
 
-                msg = {
-                    "text" : "bye!",
-                    "type" : "quit",
-                    "from" : "@server",
-                    "to" : _user.nick
-                }
-                self.msg.send(_user.client, msg)
-                trd = self.trds_dict[_user.key]
+            msg = {
+                "text" : "bye!",
+                "type" : "quit",
+                "from" : "@server",
+                "to" : _user.nick
+            }
+            self.msg.send(_user.client, msg)
+            trd = self.trds_dict[_user.key]
 
-                del self.trds_dict[_user.key]
-                self.users_list.remove(_user)
-                print "Thread of user " + _user.nick + " has ended. " + \
-                "User was removed from list"
-                trd.join()
+            del self.trds_dict[_user.key]
+            self.users_list.remove(_user)
+            print "User " + _user.nick + " leave the server. " + \
+            "User was removed from list"
+            #trd.join()
 
-            else:
+        else:
 
-                old_group = _user.group
-                msg = {
-                    "group" : "",
-                    "text" : "You leave " + old_group + " group",
-                    "type" : "server",
-                    "from" : "@server",
-                    "to" : _user.nick
-                }
-                setattr(_user, 'away', False)
-                setattr(_user, 'group', "")
-                self.msg.send(_user.client, msg)
-        except:
+            old_group = _user.group
+            msg = {
+                "group" : "",
+                "text" : "You leave " + old_group + " group",
+                "type" : "server",
+                "from" : "@server",
+                "to" : _user.nick
+            }
+            setattr(_user, 'away', False)
+            setattr(_user, 'group', "")
+            self.msg.send(_user.client, msg)
+        # except:
 
-            print "Unexpected error on /leave:", sys.exc_info()[0]
-            self.server_send(_user, "Error on /leave. Try again. If you " + \
-            "need: /help")
+        #     print "Unexpected error on /leave:", sys.exc_info()[0]
+        #     self.server_send(_user, "Error on /leave. Try again. If you " + \
+        #     "need: /help")
 
     def com_list(self, _data, _user, _full_msg={}):
         """

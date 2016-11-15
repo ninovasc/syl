@@ -75,6 +75,11 @@ class Client(object):
                         ans["text"] = "file saved on: " + sys.path[0] + \
                         "/" + file_time + ans["file_name"]
                     if ans["type"] == "quit":
+                        self.window.addstr_data("*** " + ans["text"]+"\n",
+                                            "server")
+                        #self.thread_send.join()
+                        #self.window.close()
+
                         break
 
 
@@ -88,14 +93,17 @@ class Client(object):
                     self.window.addstr_data(ans["from"] + " > " + \
                     ans["text"]+"\n", "text")
 
-        # finally:
+        self.thread_send.join()
+        self.window.close()
+        #sys.exit(0)
+        #finally:
         #     self.window.addstr_data("*** " + ans["text"]+"\n",
         #                             "server")
 
 
-        #     self.window.close()
-        #     self.thread_send.join()
-        #     end_client(self)
+         #    self.window.close()
+         #    self.thread_send.join()
+         #    end_client(self)
 
 
     def send_server(self):
@@ -157,6 +165,8 @@ def end_client(_client):
 
     @return     void method.
     """
+    _client.thread_send.join()
+    #_client.thread_listen.join()
     _client.window.close()
     _client = None
     print "Client is now closed. See you later!"
