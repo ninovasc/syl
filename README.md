@@ -114,33 +114,33 @@ Commands:
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/file.png?raw=true)
 
- * /get_file &lt;file&gt;
+* /get_file &lt;file&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/get_file.png?raw=true)
 
- * /join &lt;group&gt;
+* /join &lt;group&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/join.png?raw=true)
 
- * /kick &lt;nick&gt;
+* /kick &lt;nick&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/kick.png?raw=true)
 
- * /leave
+* /leave
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/leave.png?raw=true)
 
- * /list_files
+* /list_files
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_files.png?raw=true)
 
- * /list
+* /list
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_groups.png?raw=true)
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/list_user.png?raw=true)
 
- * /msg &lt;nick&gt; &lt;text&gt;
+* /msg &lt;nick&gt; &lt;text&gt;
 
  ![syl](https://github.com/ninovasc/syl/blob/master/readme_img/msg.png?raw=true)
 
