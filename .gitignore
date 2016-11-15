@@ -6,7 +6,7 @@
 *.exe
 *.o
 *.so
-*.pyc 
+*.pyc
 
 # Packages #
 ############
@@ -36,3 +36,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Doxygen configuration file
+############################
+doxygen

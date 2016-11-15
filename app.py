@@ -29,10 +29,9 @@ def client(_ip, _port):
     @return     return one client
     """
     print "Application inicialized as client"
-    try:
-        Client(_ip, _port)
-    except:
-        pass
+
+    Client(_ip, _port)
+
 
 if __name__ == "__main__":
     """

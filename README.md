@@ -1,4 +1,4 @@
-# syl
+## syl
 
 syl (see you later) is a chat application made in python with in client-server approach.
 
