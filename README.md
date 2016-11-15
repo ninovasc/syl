@@ -1,5 +1,6 @@
+
+
 # syl - see you later
--------------------------------
 
 syl is a chat application made in python with in client-server approach.
 
@@ -62,21 +63,27 @@ Application main interface module, can call app in client or server mode.
 From command line.
 
 **lib/client.py**
+
 This is syl client, this module controls conection request to server and the user interface with curses, after client is connected to the server two threads are started, one to receive server messagens and another to send mesage to server.
 
 **lib/server.py**
+
 Server is the heart of syl. All functions are implemented in this module. Here all server flow is implemented.
 
 **lib/msg.py**
+
 This module manage the messages in syl. All message transfers in converted in a JSON by this module, even files.
 
 **lib/files_db.py**
+
 Manages a SQLite database created in server start (if already exist the database are overwrite). This data base store the files send by users.
 
 **lib/window.py**
+
 This is only curses library control for client, all client window is draw by this module.
 
 **lib/user.py**
+
 Only an objetc structure to server manage user attributes.
 
 ## syl application in use
