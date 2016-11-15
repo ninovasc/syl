@@ -86,6 +86,10 @@ This is only curses library control for client, all client window is draw by thi
 
 Only an objetc structure to server manage user attributes.
 
+**lib/log.py**
+
+Manages the log og all server/clients transfers in a JSON file.
+
 ## syl application in use
 
 Message of the day:
