@@ -1,4 +1,4 @@
-
+ [![syl](https://github.com/ninovasc/syl/blob/master/readme_img/syl_logo.gif?raw=true)](https://github.com/ninovasc/syl/)
 
 # syl - see you later
 
@@ -87,5 +87,8 @@ This is only curses library control for client, all client window is draw by thi
 Only an objetc structure to server manage user attributes.
 
 ## syl application in use
--------------------------------
 
+Commands:
+
+* /nick <new nick>
+ [![syl](https://github.com/ninovasc/syl/blob/master/readme_img/nick.png?raw=true)](https://github.com/ninovasc/syl/)
